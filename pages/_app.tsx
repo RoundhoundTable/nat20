@@ -10,6 +10,7 @@ import {
 import { auth } from "../libs/firebaseApp";
 import { setContext } from "@apollo/client/link/context";
 import AuthProvider from "../context/AuthProvider";
+import SocketProvider from "../context/SocketProvider";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3000/api/graphql",
@@ -38,7 +39,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <Component {...pageProps} />
+        <SocketProvider>
+          <Component {...pageProps} />
+        </SocketProvider>
       </AuthProvider>
     </ApolloProvider>
   );
