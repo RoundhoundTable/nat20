@@ -28,6 +28,10 @@ class User {
         }
       : null;
   }
+
+  static async getRef(uid: string): Promise<DocumentReference> {
+    return this.collection.doc(uid);
+  }
 }
 
 export default User;
