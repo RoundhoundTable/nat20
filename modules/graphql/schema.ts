@@ -1,8 +1,11 @@
 import { gql } from "apollo-server-micro";
 
+// TODO: Add more complex typing and fields (purse, death_throws, equipment, etc)
+
 const typeDefs = gql`
   type Query {
     _user: User
+    campaigns: [Campaign]
   }
 
   type Mutation {
@@ -25,6 +28,36 @@ const typeDefs = gql`
   input LoginMutationInput {
     email: String!
     password: String!
+  }
+
+  type Character {
+    uid: String
+    class: String
+    classArmor: Int
+    hitPoints: Int
+    initiative: Int
+    level: Int
+    name: String
+    picture: String
+    proficiencyBonus: Int
+    speed: Int
+    spells: [String]
+    user: User
+  }
+
+  type CampaignCharacter {
+    uid: String
+    character: Character
+    hit_points: Int
+    is_dead: Boolean
+  }
+
+  type Campaign {
+    uid: String
+    dungeon_master: User
+    password: String
+    title: String
+    characters: [CampaignCharacter]
   }
 `;
 
