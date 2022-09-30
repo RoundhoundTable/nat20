@@ -6,8 +6,8 @@ import { CharactersList } from "../components/CharactersList";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex flex-col p-5 bg-[#343642] h-screen justify-center">
-    <CharactersList/>
+    <div className="flex flex-col p-5 bg-background-500 h-screen justify-center items-center">
+      <CharactersList/>
       <Image src={Logo} />
       <div className="mt-28 flex flex-col p-10 gap-5 items-center">
         <Button>Login</Button>
