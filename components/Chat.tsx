@@ -7,7 +7,7 @@ interface IChatData {
 
 export const Chat: FunctionComponent<IChatData> = (props) => {
     return (
-        <div className="flex flex-col gap-1 h-full">
+        <div className="flex flex-col gap-1 h-full w-full">
             <div className="flex flex-row justify-end">
                 <button><Icon icon="mdi:dice-d4-outline" className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]" /></button>
                 <button><Icon icon="mdi:dice-d6-outline" className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]" /></button>
