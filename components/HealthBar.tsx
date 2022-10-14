@@ -7,7 +7,7 @@ interface IHealthBarData {
 
 export const HealthBar: FunctionComponent<IHealthBarData> = (props) => {
     return (
-        <div className="relative w-full h-7 bg-background-500 rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
+        <div className="relative w-full h-5 bg-background-500 rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
             <div className={`h-full bg-danger-800 rounded-lg`} style={
                 {
                     width: `${ ( 100 / props.hitPoints ) * props.currentHitPoints }%`
