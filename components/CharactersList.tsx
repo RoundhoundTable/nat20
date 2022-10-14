@@ -7,7 +7,7 @@ export const CharactersList: NextComponentType = () => {
     const [viewList, setViewList] = useState<boolean>(false)
 
     return (
-        <div className={twMerge("absolute top-0 right-0 bg-[#21222A] w-full md:w-96 md:h-auto", viewList && "h-screen z-10")}>
+        <div className={twMerge("absolute top-0 right-0 bg-[#21222A] w-full md:w-96 md:h-auto overflow-hidden", viewList && "h-screen z-10")}>
             <button className="text-white font-bold w-full h-16 text-center uppercase" onClick={() => setViewList(!viewList)}>Characters</button>
             {viewList &&
                 <>
