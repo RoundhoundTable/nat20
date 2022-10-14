@@ -74,6 +74,9 @@ module.exports = {
           900: "#090B1F",
         },
       },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [],
