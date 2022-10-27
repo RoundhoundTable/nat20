@@ -12,6 +12,7 @@ import { setContext } from "@apollo/client/link/context";
 import AuthProvider from "../context/AuthProvider";
 import SocketProvider from "../context/SocketProvider";
 import Head from "next/head";
+import ModalProvider from "../context/ModalProvider";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3000/api/graphql",
@@ -39,18 +40,27 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-    <Head>
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    </Head>
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <SocketProvider>
-          <Component {...pageProps} />
-        </SocketProvider>
-      </AuthProvider>
-    </ApolloProvider>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <ApolloProvider client={client}>
+        <AuthProvider>
+          <SocketProvider>
+            <ModalProvider>
+              <Component {...pageProps} />
+            </ModalProvider>
+          </SocketProvider>
+        </AuthProvider>
+      </ApolloProvider>
     </>
   );
 }
