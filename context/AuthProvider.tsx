@@ -5,9 +5,10 @@ import {
 } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { IAuthContext } from "../interfaces/context";
-import { IUser } from "../interfaces/firebase";
+import { IUser } from "../interfaces/entities";
 import { useApolloClient, gql } from "@apollo/client";
 import { auth } from "../libs/firebaseApp";
+import { LoginForm } from "../pages/socketTesting";
 
 export const AuthContext = createContext<IAuthContext | null>(null);
 
@@ -16,8 +17,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const signIn = (token: string) => {
-    return signInWithCustomToken(auth, token);
+  const signIn = async (credentials: LoginForm) => {
+    const { data } = await client.mutate({
+      mutation: gql`
+        mutation Login($credentials: LoginMutationInput!) {
+          login(credentials: $credentials)
+        }
+      `,
+      variables: {
+        credentials,
+      },
+    });
+
+    if (data) signInWithCustomToken(auth, data.login);
   };
 
   const signOut = (): any => {
