@@ -15,7 +15,7 @@ import Head from "next/head";
 import ModalProvider from "../context/ModalProvider";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:3000/api/graphql",
+  uri: "/api/graphql",
 });
 
 const getIdToken = async () => await auth.currentUser?.getIdToken();
