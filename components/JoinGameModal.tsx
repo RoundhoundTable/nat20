@@ -1,22 +1,21 @@
 import { NextComponentType } from "next";
-import Modal from "../components/Modal";
 import Input from "./Input";
 import Button from "../components/Button";
 
 const JoinGameModal: NextComponentType = () => {
   return (
-    <>
-      <Modal>
-        <h1 className="py-5 text-2xl font-bold text-center">JOIN GAME</h1>
-        <div className="px-2 font-medium">Game ID</div>
+    <div className="flex flex-col items-center gap-5 text-white">
+      <p className="text-2xl font-bold uppercase">Join Game</p>
+      <div>
+        <p className="font-medium">Game ID</p>
         <Input />
-        <div className="px-2 mt-4 font-medium">Password</div>
+      </div>
+      <div>
+        <p className="font-medium">Password</p>
         <Input />
-        <br />
-        <br />
-        <Button>JOIN</Button>
-      </Modal>
-    </>
+      </div>
+      <Button>Join</Button>
+    </div>
   );
 };
 
