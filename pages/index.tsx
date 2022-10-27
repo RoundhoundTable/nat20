@@ -12,9 +12,9 @@ const Home: NextPage = () => {
         <title>Nat20</title>
       </Head>
       <div className="flex flex-col p-5 bg-background-500 h-screen justify-center items-center font-poppins">
-        <CharactersList/>
+        <CharactersList />
         <Image src={Logo} />
-        <div className="mt-28 flex flex-col p-10 gap-5 items-center">
+        <div className="flex flex-col mt-28 p-10 gap-5 items-center">
           <Button>Login</Button>
           <Button>Register</Button>
         </div>
