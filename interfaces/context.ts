@@ -1,12 +1,11 @@
 import type { UserCredential } from "firebase/auth";
 import { Socket } from "socket.io-client";
-import { LoginForm } from "../pages/socketTesting";
 import { IUser } from "./entities";
 import { EModals } from "../enums/modals";
 
 export interface IAuthContext {
   currentUser: IUser | null;
-  signIn: (credentials: LoginForm) => void;
+  signIn: (credentials: { email: string; password: string }) => void;
   signOut: () => void;
   signUp: (token: string) => Promise<UserCredential>;
   fetch: () => Promise<void>;
