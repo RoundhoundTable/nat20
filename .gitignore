@@ -39,3 +39,5 @@ next-env.d.ts
 # Firebase service account
 /modules/firebase/service-account.json
 /modules/prisma/migrations
+
+/pages/socketTesting.tsx
