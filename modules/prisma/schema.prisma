@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id
+  username String
+
+  dungeonMasterIn Campaign[]
+  characters      Character[]
+}
+
+model Campaign {
+  id              String   @id
+  dungeonMasterId String
+  password        String
+  lastSession     DateTime
+
+  dungeonMaster User                @relation(fields: [dungeonMasterId], references: [id])
+  characters    CampaignCharacter[]
+}
+
+model Character {
+  id               String @id @default(uuid())
+  level            Int
+  class            String
+  userId           String
+  name             String
+  description      String
+  thumbnail        String
+  classArmor       Int
+  hitPoints        Int
+  initiative       Int
+  proficiencyBonus Int
+  speed            Int
+  stats            Json
+  slots            Json
+  spells           Json
+
+  user      User                @relation(fields: [userId], references: [id])
+  campaigns CampaignCharacter[] @relation(map: "character_campaigns_fk")
+}
+
+model CampaignCharacter {
+  id          String  @id @default(uuid())
+  characterId String
+  campaignId  String
+  inventory   Json
+  purse       Json
+  isAlive     Boolean @default(true)
+  hitPoints   Int
+  deathThrows Json
+  spellSlots  Json
+
+  character Character @relation(fields: [characterId], references: [id])
+  campaign  Campaign  @relation(fields: [campaignId], references: [id])
+
+  @@unique([characterId, campaignId])
+  @@map("campaign_character")
+}
