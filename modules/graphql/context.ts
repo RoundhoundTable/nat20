@@ -18,11 +18,6 @@ export const createContext = async ({
     const idToken = authorization.match(regex)?.[1];
 
     if (idToken) {
-      /* Reemplazo del frontend 
-      const customTokenSignIn = await signInWithCustomToken(appAuth, idToken);
-      const userIdToken = await customTokenSignIn.user.getIdToken();
-       Reemplazo del frontend */
-
       const token = await auth.verifyIdToken(idToken);
 
       user = await prisma.user.findUnique({
