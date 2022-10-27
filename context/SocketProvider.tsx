@@ -12,19 +12,24 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
 
   const initializeSocket = async () => {
     await fetch("/api/socket");
+    const _socket = io();
 
-    setSocket(
-      io({
-        auth: {
-          ...currentUser,
-        },
-      })
-    );
+    setSocket(_socket);
+  };
+
+  const createRoom = (campaignId: string) => {
+    if (currentUser && socket) socket.emit("createRoom", campaignId);
+  };
+
+  const joinRoom = (id: string, password: string) => {
+    if (currentUser && socket) socket.emit("joinRoom", { id, password });
   };
 
   const value = {
     socket,
     initializeSocket,
+    joinRoom,
+    createRoom,
   };
 
   return (
