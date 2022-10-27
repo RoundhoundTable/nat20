@@ -1,5 +1,6 @@
-import { IUser } from "./firebase";
+import { PrismaClient, User } from "@prisma/client";
 
 export interface ApolloContext {
-  user: IUser | null;
+  user: User | null;
+  prisma: PrismaClient;
 }
