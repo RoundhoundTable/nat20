@@ -8,8 +8,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../../../libs/firebaseAdmin";
 import { auth as clientAuth } from "../../../libs/firebaseApp";
-import User from "../../firebase/entities/User";
 import { ApolloContext } from "../../../interfaces/apollo";
+import prisma from "../../../libs/prisma";
 
 const mutationResolver = {
   register: async (
@@ -24,9 +24,11 @@ const mutationResolver = {
         credentials.password
       );
 
-      await User.create({
-        uid: firebaseCredentials.user.uid,
-        username: credentials.username,
+      await prisma.user.create({
+        data: {
+          id: firebaseCredentials.user.uid,
+          username: credentials.username,
+        },
       });
 
       const token = await auth.createCustomToken(firebaseCredentials.user.uid);
