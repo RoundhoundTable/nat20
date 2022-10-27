@@ -1,7 +1,7 @@
+import { User } from "@prisma/client";
 import { ApolloContext } from "../../interfaces/apollo";
-import { IUser } from "../../interfaces/firebase";
 import { auth } from "../../libs/firebaseAdmin";
-import User from "../firebase/entities/User";
+import prisma from "../../libs/prisma";
 
 export const createContext = async ({
   req,
@@ -11,20 +11,30 @@ export const createContext = async ({
   _: any;
 }): Promise<ApolloContext> => {
   const regex = /Bearer (.+)/i;
-  let user: IUser | null = null;
+  let user: User | null = null;
 
   if (req.headers.authorization) {
     const { authorization, ...headers } = req.headers;
     const idToken = authorization.match(regex)?.[1];
 
     if (idToken) {
+      /* Reemplazo del frontend 
+      const customTokenSignIn = await signInWithCustomToken(appAuth, idToken);
+      const userIdToken = await customTokenSignIn.user.getIdToken();
+       Reemplazo del frontend */
+
       const token = await auth.verifyIdToken(idToken);
 
-      user = await User.get(token.uid);
+      user = await prisma.user.findUnique({
+        where: {
+          id: token.uid,
+        },
+      });
     }
   }
 
   return {
     user,
+    prisma,
   };
 };
