@@ -3,6 +3,8 @@ import { FunctionComponent, ReactNode } from "react";
 import { EModals } from "../enums/modals";
 import useModal from "../hooks/useModal";
 import JoinGameModal from "./JoinGameModal";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 interface IModalProps {
   modal: EModals;
@@ -10,21 +12,23 @@ interface IModalProps {
 
 const modals: Record<EModals, ReactNode> = {
   JOIN_GAME: <JoinGameModal />,
-  REGISTER: <></>,
-  LOGIN: <></>,
+  REGISTER: <RegisterModal />,
+  LOGIN: <LoginModal />,
 };
 
 const Modal: FunctionComponent<IModalProps> = ({ modal }) => {
   const { unsetModal } = useModal();
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50">
-      <Icon
-        onClick={unsetModal}
-        className="absolute right-0 top-0 mr-2 mt-2"
-        color="#F6E3B9"
-        icon="akar-icons:cross"
-      />
-      {modals[modal]}
+    <div className="absolute bg-[#25273520] backdrop-blur-md w-screen h-screen z-40">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50">
+        <Icon
+          onClick={unsetModal}
+          className="absolute right-0 top-0 mr-2 mt-2"
+          color="#F6E3B9"
+          icon="akar-icons:cross"
+        />
+        {modals[modal]}
+      </div>
     </div>
   );
 };
