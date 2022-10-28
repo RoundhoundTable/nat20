@@ -16,19 +16,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const signIn = async (credentials: { email: string; password: string }) => {
-    const { data } = await client.mutate({
-      mutation: gql`
-        mutation Login($credentials: LoginMutationInput!) {
-          login(credentials: $credentials)
-        }
-      `,
-      variables: {
-        credentials,
-      },
-    });
-
-    if (data) signInWithCustomToken(auth, data.login);
+  const signIn = (token: string) => {
+    return signInWithCustomToken(auth, token);
   };
 
   const signOut = (): any => {
