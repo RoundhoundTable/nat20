@@ -5,7 +5,7 @@ import { EModals } from "../enums/modals";
 
 export interface IAuthContext {
   currentUser: IUser | null;
-  signIn: (credentials: { email: string; password: string }) => void;
+  signIn: (token: string) => Promise<UserCredential>;
   signOut: () => void;
   signUp: (token: string) => Promise<UserCredential>;
   fetch: () => Promise<void>;
