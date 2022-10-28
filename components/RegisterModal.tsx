@@ -17,16 +17,13 @@ interface RegisterForm {
 
 const RegisterModal: NextComponentType = () => {
   const { signUp } = useAuth();
-  const { form, onChange, errors, onError, submit } = useForm<RegisterForm>({});
+  const { form, onChange, errors, submit } = useForm<RegisterForm>({});
   const [Register, { data }] = useMutation(
     gql`
       mutation Mutation($credentials: RegisterMutationInput!) {
         register(credentials: $credentials)
       }
-    `,
-    {
-      onError,
-    }
+    `
   );
 
   const registerWrapper = async () => {

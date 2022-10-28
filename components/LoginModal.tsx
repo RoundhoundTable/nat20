@@ -14,16 +14,13 @@ interface LoginForm {
 
 const LoginModal: NextComponentType = () => {
   const { signIn } = useAuth();
-  const { form, onChange, errors, onError, submit } = useForm<LoginForm>({});
+  const { form, onChange, errors, submit } = useForm<LoginForm>({});
   const [Login, { data }] = useMutation(
     gql`
       mutation Mutation($credentials: LoginMutationInput!) {
         login(credentials: $credentials)
       }
-    `,
-    {
-      onError,
-    }
+    `
   );
 
   const loginWrapper = async () => {

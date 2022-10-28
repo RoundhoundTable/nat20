@@ -5,10 +5,6 @@ export const useForm = <T>({ initialValue }: { initialValue?: T }) => {
   const [form, setForm] = useState<T>(initialValue as T);
   const [errors, setErrors] = useState<T | null>();
 
-  const onError = (error: ApolloError) => {
-    setErrors({ ...errors, ...error } as T);
-  };
-
   const onChange = (ev: any) =>
     setForm({
       ...form,
@@ -48,7 +44,6 @@ export const useForm = <T>({ initialValue }: { initialValue?: T }) => {
     onChange,
     errors,
     resetErrors,
-    onError,
     submit,
   };
 };
