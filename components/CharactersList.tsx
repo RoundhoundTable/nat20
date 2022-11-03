@@ -20,7 +20,7 @@ export const CharactersList: NextComponentType = () => {
                         <Character picture="https://picsum.photos/100" name="Azariah Ravawraek" _class="Sorcerer" level={3} />
                         <Character picture="https://picsum.photos/100" name="Azariah Ravawraek" _class="Sorcerer" level={3} />
                     </div>
-                    <button className="sticky bottom-0 text-white font-bold w-full h-16 text-center">New character</button>
+                    <button className="sticky bottom-0 bg-[#21222A] text-white font-bold w-full h-16 text-center">New character</button>
                 </>
             }
         </div>
