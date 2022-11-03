@@ -47,7 +47,7 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({picture, name,
                 <img src={CaIcon.src}/>
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-3/4">{CA}</span>
             </div>
-            <SavingThrow />
+            <SavingThrow throws={[false, true]}/>
         </div>
     )
 }
