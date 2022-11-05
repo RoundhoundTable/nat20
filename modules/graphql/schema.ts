@@ -1,7 +1,5 @@
 import { gql } from "apollo-server-micro";
 
-// TODO: Add more complex typing and fields (purse, death_throws, equipment, etc)
-
 const typeDefs = gql`
   type Query {
     _user: User
@@ -11,6 +9,7 @@ const typeDefs = gql`
   type Mutation {
     register(credentials: RegisterMutationInput!): String
     login(credentials: LoginMutationInput!): String
+    deleteCharacter(id: String!): Boolean
   }
 
   type User {
