@@ -1,5 +1,6 @@
 export enum EModals {
   JOIN_GAME = "JOIN_GAME",
+  CREATE_GAME = "CREATE_GAME",
   REGISTER = "REGISTER",
   LOGIN = "LOGIN",
 }

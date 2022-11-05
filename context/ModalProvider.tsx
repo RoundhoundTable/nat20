@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useState } from "react";
 import { EModals } from "../enums/modals";
 import { IModalContext } from "../interfaces/context";
-import Modal from "../components/Modal";
+import Modal from "../components/Modals/Modal";
 
 export const ModalContext = createContext<IModalContext | null>(null);
 
