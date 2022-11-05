@@ -30,5 +30,5 @@ export interface IGameContext {
 export interface IModalContext {
   modal: EModals | null;
   unsetModal: () => void;
-  setModal: (modal: EModals) => void;
+  setModal: (modal: EModals, props?: any) => void;
 }

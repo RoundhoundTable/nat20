@@ -7,10 +7,13 @@ export const ModalContext = createContext<IModalContext | null>(null);
 
 const ModalProvider = ({ children }: PropsWithChildren<any>) => {
   const [modal, setModalState] = useState<EModals | null>(null);
+  const [props, setProps] = useState<any | undefined>(undefined);
 
   const unsetModal = () => setModalState(null);
-  const setModal = (modal: EModals) => {
+
+  const setModal = (modal: EModals, props?: any) => {
     setModalState(modal);
+    setProps(props);
   };
 
   const value = {
@@ -21,7 +24,7 @@ const ModalProvider = ({ children }: PropsWithChildren<any>) => {
 
   return (
     <ModalContext.Provider value={value}>
-      {modal && <Modal modal={modal} />}
+      {modal && <Modal modal={modal} props={props} />}
       {children}
     </ModalContext.Provider>
   );
