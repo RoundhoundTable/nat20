@@ -1,15 +1,15 @@
-import { Campaign, CampaignCharacter } from "@prisma/client";
+import { Character } from "@prisma/client";
 import { Socket } from "socket.io";
 
 class Room {
   public readonly id: string;
-  public readonly campaign: Campaign;
+  public readonly password: string;
   private dungeonMaster: Socket | undefined = undefined;
-  private players: Map<Socket, CampaignCharacter> = new Map();
+  private players: Map<Socket, Character> = new Map();
 
-  constructor(id: string, campaign: Campaign) {
+  constructor(id: string, password: string) {
     this.id = id;
-    this.campaign = campaign;
+    this.password = password;
   }
 
   joinAsDm(socket: Socket) {
@@ -17,8 +17,8 @@ class Room {
     socket.join(this.id);
   }
 
-  async join(socket: Socket, password: string, character: CampaignCharacter) {
-    if (password !== this.campaign.password) return false;
+  async join(socket: Socket, password: string, character: Character) {
+    if (password !== this.password) return false;
     if (this.players.get(socket)) return false;
 
     socket.join(this.id);
