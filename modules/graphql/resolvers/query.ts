@@ -1,20 +1,11 @@
 import { ApolloContext } from "../../../interfaces/apollo";
+import CharactersQueryHandler from "../handlers/query/CharactersQueryHandler";
 
 const queryResolver = {
   _user: (_parent: unknown, _: unknown, ctx: ApolloContext) => {
     return ctx.user;
   },
-  campaigns: async (_parent: unknown, _: unknown, ctx: ApolloContext) => {
-    if (!ctx.user) return;
-
-    const campaigns = await ctx.prisma.campaign.findMany({
-      where: {
-        dungeonMasterId: ctx.user.id,
-      },
-    });
-
-    return campaigns;
-  },
+  characters: CharactersQueryHandler,
 };
 
 export default queryResolver;
