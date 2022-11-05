@@ -1,11 +1,11 @@
 import { NextComponentType } from "next";
-import { Input } from "./Input";
-import Button from "../components/Button";
+import { Input } from "../Input";
+import Button from "../Button";
 import { useEffect } from "react";
 import Router from "next/router";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { gql, useMutation } from "@apollo/client";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../../hooks/useForm";
 
 interface LoginForm {
   email: string;

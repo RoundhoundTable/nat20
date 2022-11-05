@@ -1,6 +1,6 @@
 import { NextComponentType } from "next";
-import { Input } from "./Input";
-import Button from "../components/Button";
+import { Input } from "../Input";
+import Button from "../Button";
 
 const JoinGameModal: NextComponentType = () => {
   return (

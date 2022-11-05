@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent, ReactNode } from "react";
-import { EModals } from "../enums/modals";
-import useModal from "../hooks/useModal";
+import { EModals } from "../../enums/modals";
+import useModal from "../../hooks/useModal";
+import CreateGameModal from "./CreateGameModal";
 import JoinGameModal from "./JoinGameModal";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
@@ -14,6 +15,7 @@ const modals: Record<EModals, ReactNode> = {
   JOIN_GAME: <JoinGameModal />,
   REGISTER: <RegisterModal />,
   LOGIN: <LoginModal />,
+  CREATE_GAME: <CreateGameModal />,
 };
 
 const Modal: FunctionComponent<IModalProps> = ({ modal }) => {

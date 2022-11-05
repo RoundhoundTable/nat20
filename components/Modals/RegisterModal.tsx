@@ -1,8 +1,8 @@
 import { NextComponentType } from "next";
-import { Input } from "./Input";
-import Button from "./Button";
-import { useAuth } from "../hooks/useAuth";
-import { useForm } from "../hooks/useForm";
+import { Input } from "../Input";
+import Button from "../Button";
+import { useAuth } from "../../hooks/useAuth";
+import { useForm } from "../../hooks/useForm";
 import { gql } from "apollo-server-core";
 import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
