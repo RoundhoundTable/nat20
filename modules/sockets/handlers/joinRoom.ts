@@ -2,24 +2,24 @@ import { Socket } from "socket.io";
 import prisma from "../../../libs/prisma";
 import SocketHandler from "../../../libs/socket";
 
-async function joinRoom(this: Socket, args: { id: string; password: string }) {
+async function joinRoom(
+  this: Socket,
+  args: { id: string; password: string; characterId: string }
+) {
   const room = SocketHandler.rooms.get(args.id);
   if (!room) throw Error("Not Found");
 
   const user = this.handshake.auth;
-  const character = await prisma.campaignCharacter.findFirst({
+
+  if (!user) throw new Error("Forbidden");
+
+  const character = await prisma.character.findFirst({
     where: {
-      campaign: room.campaign,
-      character: {
-        userId: user.uid,
-      },
-    },
-    include: {
-      character: true,
+      id: args.characterId,
     },
   });
 
-  if (!character) return;
+  if (!character) throw new Error("Character not found!");
 
   const joinResult = room.join(this, args.password, character);
 
@@ -27,7 +27,7 @@ async function joinRoom(this: Socket, args: { id: string; password: string }) {
 
   SocketHandler.socketRooms.set(this, room);
 
-  this.emit("roomConnected", `/game/${room.id}`);
+  this.emit("roomConnected", { room: room.id, isDm: false });
 }
 
 export default joinRoom;
