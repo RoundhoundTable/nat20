@@ -16,18 +16,18 @@ const Home: NextPage = () => {
       <Head>
         <title>Nat20</title>
       </Head>
-      <div className="flex flex-col p-5 bg-background-500 h-screen justify-center items-center font-poppins">
+      <div className="flex flex-col gap-5 md:pt-10 bg-background-500 h-screen justify-between items-center font-poppins">
         {currentUser && <CharactersList />}
         <Image src={Logo} />
         {currentUser ? (
-          <div className="flex flex-col mt-28 p-10 gap-5 items-center">
+          <div className="flex flex-col pb-10 gap-5 items-center">
             <Button onClick={() => setModal(EModals.JOIN_GAME)}>
               Join Game
             </Button>
             <Button>Create Game</Button>
           </div>
         ) : (
-          <div className="flex flex-col mt-28 p-10 gap-5 items-center">
+          <div className="flex flex-col pb-10 gap-5 items-center">
             <Button onClick={() => setModal(EModals.LOGIN)}>Login</Button>
             <Button onClick={() => setModal(EModals.REGISTER)}>Register</Button>
           </div>
