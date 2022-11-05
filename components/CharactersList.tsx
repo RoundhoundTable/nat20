@@ -27,18 +27,16 @@ export const CharactersList: NextComponentType = () => {
             {isLoading ? (
               <p>Loading...</p>
             ) : (
-              characters.map((character: any, key: number) => {
-                console.log(character);
-                return (
-                  <Character
-                    key={key}
-                    picture={character.picture}
-                    name={character.name}
-                    _class={character.class}
-                    level={character.level}
-                  />
-                );
-              })
+              characters.map((character: any, key: number) => (
+                <Character
+                  id={character.id}
+                  key={key}
+                  picture={character.picture}
+                  name={character.name}
+                  _class={character.class}
+                  level={character.level}
+                />
+              ))
             )}
           </div>
           <button className="sticky bottom-0 bg-[#21222A] text-white font-bold w-full h-16 text-center">
