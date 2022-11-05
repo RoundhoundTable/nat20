@@ -5,7 +5,7 @@ import { gql } from "apollo-server-micro";
 const typeDefs = gql`
   type Query {
     _user: User
-    campaigns: [Campaign]
+    characters: [Character]
   }
 
   type Mutation {
@@ -31,7 +31,7 @@ const typeDefs = gql`
   }
 
   type Character {
-    uid: String
+    id: String
     class: String
     classArmor: Int
     hitPoints: Int
@@ -41,23 +41,7 @@ const typeDefs = gql`
     picture: String
     proficiencyBonus: Int
     speed: Int
-    spells: [String]
     user: User
-  }
-
-  type CampaignCharacter {
-    uid: String
-    character: Character
-    hit_points: Int
-    is_dead: Boolean
-  }
-
-  type Campaign {
-    uid: String
-    dungeon_master: User
-    password: String
-    title: String
-    characters: [CampaignCharacter]
   }
 `;
 
