@@ -4,4 +4,5 @@ export enum EModals {
   CONFIRMATION = "CONFIRMATION",
   REGISTER = "REGISTER",
   LOGIN = "LOGIN",
+  WIKI = "WIKI",
 }
