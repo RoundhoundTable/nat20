@@ -1,6 +1,5 @@
 import { Chat } from "./Chat";
 import { PlayerList } from "./PlayerList";
-import WikiButton from "./WikiButton";
 
 export const DmView = () => {
     return (
@@ -9,8 +8,7 @@ export const DmView = () => {
                 <PlayerList />
                 <Chat conectedUsers={3}/>
             </div>
-            <textarea name="notes" id="" cols={30} rows={10} className="bg-transparent border border-primary-500"></textarea>
-            <WikiButton>Busqueda</WikiButton>
+            <textarea name="notes" id="" cols={30} rows={10} className="resize-none bg-transparent border border-primary-500"></textarea>
         </div>
     )
 }
