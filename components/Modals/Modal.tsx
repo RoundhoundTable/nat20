@@ -7,6 +7,7 @@ import CreateGameModal from "./CreateGameModal";
 import JoinGameModal from "./JoinGameModal";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import {WikiModal} from "./WikiModal";
 
 interface IModalProps {
   modal: EModals;
@@ -25,6 +26,8 @@ const getModal = (modal: EModals, props?: any) => {
       return <CreateGameModal />;
     case EModals.CONFIRMATION:
       return <ConfirmationModal {...props} />;
+    case EModals.WIKI:
+      return <WikiModal />;
     default:
       return <></>;
   }
@@ -33,8 +36,8 @@ const getModal = (modal: EModals, props?: any) => {
 const Modal: FunctionComponent<IModalProps> = ({ modal, props }) => {
   const { unsetModal } = useModal();
   return (
-    <div className="absolute bg-[#25273520] backdrop-blur-md w-screen h-screen z-40">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50">
+    <div className="fixed bg-[#25273520] backdrop-blur-md w-screen h-screen z-40">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50 max-h-screen overflow-auto">
         <Icon
           onClick={unsetModal}
           className="absolute right-0 top-0 mr-2 mt-2"
