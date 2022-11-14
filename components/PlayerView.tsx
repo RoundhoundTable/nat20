@@ -1,6 +1,6 @@
 import { NextComponentType } from "next";
 import { CharacterDisplay } from "./CharacterDisplay";
-import { Chat } from "./Chat";
+import { Chat } from "./Chat/Chat";
 
 export const PlayerView: NextComponentType = () => {
     return (
