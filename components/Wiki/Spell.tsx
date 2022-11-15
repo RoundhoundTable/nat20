@@ -7,7 +7,7 @@ const Spell: FunctionComponent = () => {
         <div className="flex flex-row border-2 border-primary-500 p-4">
         <div className="flex flex-col">
             <div className="border-b-2 border-primary-500 flex flex-row justify-between">
-                <span className="drop-shadow-[0px_0px_1px_#F6E3B9]">Name</span>
+                <span className="drop-shadow-[0px_0px_2px_#F6E3B9]">Name</span>
                 <div className="flex flex-row font-xs text-primary-400">
                     {level > 0 ? <span>{level}</span> : <span>Truco</span>},
                     School
