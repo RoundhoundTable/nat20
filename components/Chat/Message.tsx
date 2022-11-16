@@ -1,31 +1,28 @@
 import { FunctionComponent, ReactNode } from "react";
 import { EMessages } from "../../enums/messages";
-import { BotMessage } from "./BotMessage";
-import { DMMessage } from "./DMMesage";
-import { PlayerMessage } from "./PlayerMessage";
+import { BotMessage, IBotMessageData } from "./BotMessage";
+import { DMMessage, IDMMessageData } from "./DMMesage";
+import { IPlayerMessageData, PlayerMessage } from "./PlayerMessage";
+
+type IMessageProps = IPlayerMessageData | IDMMessageData | IBotMessageData;
 
 interface IChatMessageData {
-    role: EMessages
-    props?: any
+  role: EMessages;
+  props?: IMessageProps;
 }
 
-const getMessage = (message: EMessages, props?: any) => {
-    switch (message){
-        case EMessages.DM:
-            return <DMMessage {...props} />;
-        case EMessages.BOT:
-            return <BotMessage {...props} />;
-        case EMessages.PLAYER:
-            return <PlayerMessage {...props} />;
-        default:
-            return <></>;
-    }
-}
+const getMessage = (message: EMessages, props?: IMessageProps) => {
+  switch (message) {
+    case EMessages.DM:
+      return <DMMessage {...(props as IDMMessageData)} />;
+    case EMessages.BOT:
+      return <BotMessage {...(props as IBotMessageData)} />;
+    case EMessages.PLAYER:
+      return <PlayerMessage {...(props as IPlayerMessageData)} />;
+    default:
+      return <></>;
+  }
+};
 
-export const Message: FunctionComponent<IChatMessageData> = ({role, props}) => {
-    return (
-        <>
-            {getMessage(role, props)}
-        </>
-    )
-}
+export const Message: FunctionComponent<IChatMessageData> = ({ role, props }) =>
+  getMessage(role, props);
