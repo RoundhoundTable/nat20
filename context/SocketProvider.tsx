@@ -10,7 +10,7 @@ import Router from "next/router";
 export const SocketContext = createContext<ISocketContext | null>(null);
 
 const SocketProvider = ({ children }: { children: ReactNode }) => {
-  const { messages, setMessages, room, setRoom } = useGame();
+  const { setMessages, setRoom } = useGame();
   const { currentUser } = useAuth();
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -44,6 +44,8 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
       ]);
 
       setTimeout(() => {
+        setRoom(null);
+        setMessages([]);
         Router.push("/");
       }, 4000);
     });
