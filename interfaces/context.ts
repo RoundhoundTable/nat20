@@ -3,6 +3,7 @@ import { Socket } from "socket.io-client";
 import { IUser } from "./entities";
 import { EModals } from "../enums/modals";
 import { Dispatch, SetStateAction } from "react";
+import { IMessage, IRoomState } from "./game";
 
 export interface IAuthContext {
   currentUser: IUser | null;
@@ -15,16 +16,16 @@ export interface IAuthContext {
 export interface ISocketContext {
   socket: Socket | null;
   initializeSocket: () => Promise<void>;
-  joinRoom: (id: string, password: string) => void;
+  joinRoom: (id: string, password: string, characterId: string) => void;
   createRoom: (password: string) => void;
+  sendMessage: (message: string) => void;
 }
 
 export interface IGameContext {
-  roomId: string;
-  isDm: boolean;
-  setIsDm: Dispatch<SetStateAction<boolean>>;
-  setRoomId: Dispatch<SetStateAction<string>>;
-  setIngame: Dispatch<SetStateAction<boolean>>;
+  room: IRoomState | null;
+  messages: IMessage[];
+  setMessages: Dispatch<SetStateAction<IMessage[]>>;
+  setRoom: Dispatch<SetStateAction<IRoomState | null>>;
 }
 
 export interface IModalContext {
