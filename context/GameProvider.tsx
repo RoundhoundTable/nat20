@@ -1,29 +1,27 @@
 import { Router, useRouter } from "next/router";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { IGameContext } from "../interfaces/context";
+import { IMessage, IRoomState } from "../interfaces/game";
 
 export const GameContext = createContext<IGameContext | null>(null);
 
 const GameProvider = ({ children }: { children: ReactNode }) => {
-  const [ingame, setIngame] = useState(false);
-  const [isDm, setIsDm] = useState(false);
-  const [roomId, setRoomId] = useState("");
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [room, setRoom] = useState<IRoomState | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
-    if (roomId) {
-      setIngame(true);
-      router.push(`/game/${roomId}`);
+    if (room) {
+      router.push(`/game/${room.id}`);
     }
-  }, [roomId]);
+  }, [room]);
 
   const value = {
-    isDm,
-    ingame,
-    roomId,
-    setIngame,
-    setIsDm,
-    setRoomId,
+    room,
+    messages,
+    setMessages,
+    setRoom,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
