@@ -1,39 +1,66 @@
-import { Character } from "@prisma/client";
 import { Socket } from "socket.io";
+import { ICharacter } from "../../../interfaces/entities";
 
 class Room {
   public readonly id: string;
-  public readonly password: string;
-  private dungeonMaster: Socket | undefined = undefined;
-  private players: Map<Socket, Character> = new Map();
+  private readonly password: string;
+  public dungeonMaster: Socket | undefined = undefined;
+  public players: Map<string, ICharacter> = new Map();
 
-  constructor(id: string, password: string) {
+  constructor(id: string, password: string, dungeonMaster: Socket) {
     this.id = id;
     this.password = password;
+    this.dungeonMaster = dungeonMaster;
+    dungeonMaster.join(this.id);
   }
 
-  joinAsDm(socket: Socket) {
-    this.dungeonMaster = socket;
-    socket.join(this.id);
-  }
-
-  async join(socket: Socket, password: string, character: Character) {
+  async join(socket: Socket, password: string, character: ICharacter) {
     if (password !== this.password) return false;
-    if (this.players.get(socket)) return false;
+    if (this.players.get(socket.id))
+      throw new Error("Socket already in the room");
 
     socket.join(this.id);
-    this.players.set(socket, character);
-    // TODO: SET SOCKET TO CHARACTER
+
+    this.players.set(socket.id, character);
+
     return true;
   }
 
   disconnect(socket: Socket) {
-    if (this.players.get(socket)) {
-      this.players.delete(socket);
+    if (this.players.get(socket.id)) {
+      this.players.delete(socket.id);
     }
     if (this.dungeonMaster === socket) {
       console.log("dungeon master left");
     }
+  }
+
+  updateCharacter(socketId: string, payload: ICharacter) {
+    const character = this.players.get(socketId);
+
+    if (!character) throw Error("Character not found");
+
+    this.players.set(socketId, payload);
+  }
+
+  get() {
+    const serializePlayers = () => {
+      let output: Record<string, ICharacter> = {};
+
+      this.players.forEach((value, key) => {
+        let tempValue = value;
+        tempValue.stats = JSON.parse(value.stats as string);
+        output[key] = value;
+      });
+
+      return output;
+    };
+
+    return {
+      id: this.id,
+      dungeonMaster: this.dungeonMaster?.id,
+      players: serializePlayers(),
+    };
   }
 }
 
