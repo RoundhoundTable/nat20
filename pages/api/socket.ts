@@ -94,18 +94,33 @@ export default function handler(req: any, res: any) {
 
       if (!room) return;
 
-      const character = room.players.get(socket.id);
+      if (room.dungeonMaster?.id !== socket.id) {
+        const character = room.players.get(socket.id);
 
-      room.players.delete(socket.id);
-      RoomHandler.socketRooms.delete(socket);
+        room.players.delete(socket.id);
+        RoomHandler.socketRooms.delete(socket);
 
-      let messageObj: IMessage = {
-        role: EMessages.BOT,
-        message: `${character?.name} ha salido de la sala`,
-      };
+        let messageObj: IMessage = {
+          role: EMessages.BOT,
+          message: `${character?.name} ha salido de la sala`,
+        };
 
-      io.sockets.in(room.id).emit(EVENTS.USER_LEFT, messageObj);
-      io.sockets.in(room.id).emit(EVENTS.REFRESH_UI, room.get());
+        io.sockets.in(room.id).emit(EVENTS.USER_LEFT, messageObj);
+        io.sockets.in(room.id).emit(EVENTS.REFRESH_UI, room.get());
+      } else {
+        let messageObj: IMessage = {
+          role: EMessages.BOT,
+          message: `El dungeon master ha abandonado la sala. Todos serán expulsados en 3 segundos`,
+        };
+
+        setTimeout(() => {
+          RoomHandler.rooms.delete(room.id);
+          RoomHandler.socketRooms.delete(socket);
+          io.sockets.in(room.id).disconnectSockets();
+        }, 3000);
+
+        io.sockets.in(room.id).emit(EVENTS.DM_LEFT, messageObj);
+      }
     });
   };
 

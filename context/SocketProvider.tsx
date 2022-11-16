@@ -5,6 +5,7 @@ import { ISocketContext } from "../interfaces/context";
 import { useAuth } from "../hooks/useAuth";
 import useGame from "../hooks/useGame";
 import { EVENTS } from "../enums/events";
+import Router from "next/router";
 
 export const SocketContext = createContext<ISocketContext | null>(null);
 
@@ -33,6 +34,19 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
         },
       ])
     );
+
+    _socket.on(EVENTS.DM_LEFT, (message) => {
+      setMessages((state) => [
+        ...state,
+        {
+          ...message,
+        },
+      ]);
+
+      setTimeout(() => {
+        Router.push("/");
+      }, 4000);
+    });
 
     _socket.on(EVENTS.USER_LEFT, (message) =>
       setMessages((state) => [
