@@ -7,6 +7,10 @@ import prisma from "../../libs/prisma";
 import { ICharacter } from "../../interfaces/entities";
 import { IMessage } from "../../interfaces/game";
 import { EMessages } from "../../enums/messages";
+import { findSubs } from "../../utils/findSubs";
+import { findSums } from "../../utils/findSums";
+import { findDices } from "../../utils/findDices";
+import { throwDice } from "../../utils/throwDice";
 
 const genId = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
@@ -85,6 +89,50 @@ export default function handler(req: any, res: any) {
         messageObj.name = room.players.get(socket.id)?.name;
         messageObj.thumbnail = room.players.get(socket.id)?.picture;
       }
+
+      io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
+    });
+
+    socket.on(EVENTS.THROW_DICE, (args: string) => {
+      const room = RoomHandler.socketRooms.get(socket);
+
+      if (!room) return false;
+
+      const sums = findSums(args);
+      const subs = findSubs(args);
+      const dices = findDices(args);
+
+      let result = 0;
+      let resultString = "";
+      let tmp = args;
+
+      dices.forEach((dice, index) => {
+        const [amount, faces] = dice.replace("-", "").split("d");
+        const throwResult = throwDice(parseInt(amount), parseInt(faces));
+
+        let formattedResult = ` (${throwResult.join(",")})`;
+
+        let start = tmp.search(dice) + dice.length;
+        let head = tmp.slice(0, start);
+        let tail = tmp.slice(start);
+
+        resultString += head + formattedResult;
+        tmp = tail;
+
+        if (index === dices.length - 1) resultString += tail;
+
+        result += throwResult.reduce(
+          (prev, curr) => (dice.startsWith("-") ? prev - curr : prev + curr),
+          0
+        );
+      });
+
+      result += [...sums, ...subs].reduce((prev, curr) => prev + curr, 0);
+
+      let messageObj: IMessage = {
+        role: EMessages.BOT,
+        message: `${args}:  ${resultString} \n Total: ${result}`,
+      };
 
       io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
     });
