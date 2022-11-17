@@ -76,7 +76,11 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const sendMessage = (message: string) => {
-    if (socket) socket.emit(EVENTS.SEND_MESSAGE, message);
+    if (!socket) return;
+
+    if (message.startsWith("/roll") || message.startsWith("/r"))
+      socket.emit(EVENTS.THROW_DICE, message.split(" ")[1]);
+    else socket.emit(EVENTS.SEND_MESSAGE, message);
   };
 
   const value = {
