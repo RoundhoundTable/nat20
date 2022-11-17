@@ -9,4 +9,5 @@ export enum EVENTS {
   DISCONNECTING = "disconnecting",
   UPDATE_CHARACTER = "UPDATE_CHARACTER",
   REFRESH_UI = "REFRESH_UI",
+  THROW_DICE = "THROW_DICE",
 }
