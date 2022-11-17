@@ -3,14 +3,17 @@ import { Input } from "../Input";
 import Button from "../Button";
 import { createRef } from "react";
 import { useSocket } from "../../hooks/useSocket";
+import useModal from "../../hooks/useModal";
 
 const JoinGameModal: NextComponentType = () => {
   const { joinRoom } = useSocket();
+  const { unsetModal } = useModal();
   const passwordRef = createRef() as React.MutableRefObject<HTMLInputElement>;
   const idRef = createRef() as React.MutableRefObject<HTMLInputElement>;
 
   const handleJoin = () => {
     joinRoom(idRef.current.value, passwordRef.current.value, "1");
+    unsetModal();
   };
 
   return (
