@@ -9,8 +9,10 @@ import { EModals } from "../enums/modals";
 import { useAuth } from "../hooks/useAuth";
 import useModal from "../hooks/useModal";
 import { useSocket } from "../hooks/useSocket";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const Home: NextPage = () => {
+  const {width, height} = useWindowSize()
   const { setModal } = useModal();
   const { currentUser } = useAuth();
   const { socket, initializeSocket } = useSocket();
@@ -28,24 +30,30 @@ const Home: NextPage = () => {
       <Head>
         <title>Nat20</title>
       </Head>
-      <div className="flex flex-col gap-5 md:pt-10 bg-background-500 h-screen justify-between items-center font-poppins">
+      <div className="flex flex-col md:pt-10 bg-background-500 justify-between items-center font-poppins" style={
+        {
+          minHeight: `${height}px`
+        }
+      }>
         {currentUser && <CharactersList />}
-        <Image src={Logo} />
-        {currentUser ? (
-          <div className="flex flex-col pb-10 gap-5 items-center">
-            <Button onClick={() => setModal(EModals.JOIN_GAME)}>
-              Join Game
-            </Button>
-            <Button onClick={() => setModal(EModals.CREATE_GAME)}>
-              Create Game
-            </Button>
-          </div>
-        ) : (
-          <div className="flex flex-col pb-10 gap-5 items-center">
-            <Button onClick={() => setModal(EModals.LOGIN)}>Login</Button>
-            <Button onClick={() => setModal(EModals.REGISTER)}>Register</Button>
-          </div>
-        )}
+        <div className="flex flex-col gap-16 justify-center grow">
+          <Image src={Logo} />
+          {currentUser ? (
+            <div className="flex flex-col pb-10 gap-5 items-center">
+              <Button onClick={() => setModal(EModals.JOIN_GAME)}>
+                Join Game
+              </Button>
+              <Button onClick={() => setModal(EModals.CREATE_GAME)}>
+                Create Game
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-col pb-10 gap-5 items-center">
+              <Button onClick={() => setModal(EModals.LOGIN)}>Login</Button>
+              <Button onClick={() => setModal(EModals.REGISTER)}>Register</Button>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
