@@ -36,7 +36,7 @@ export const PlayerView: NextComponentType = () => {
           />
         )}
       </div>
-      <div className="h-full px-3 pb-3">
+      <div className="h-full px-3 pb-3 overflow-hidden">
         <Chat />
       </div>
     </div>

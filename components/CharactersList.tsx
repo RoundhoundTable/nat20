@@ -11,7 +11,7 @@ export const CharactersList: NextComponentType = () => {
   return (
     <div
       className={twMerge(
-        "md:absolute top-0 right-0 w-full md:w-96 bg-[#21222A]",
+        "md:absolute top-0 right-0 w-full md:w-64 lg:w-96 bg-[#21222A]",
         viewList && "absolute h-screen md:h-auto overflow-hidden z-10"
       )}
     >

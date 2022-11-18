@@ -16,7 +16,7 @@ export const Chat: FunctionComponent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-1 h-full w-full">
+    <div className="flex flex-col gap-1 h-full w-full overflow-hidden">
       <div className="flex flex-row justify-end">
         <button>
           <Icon
@@ -55,12 +55,12 @@ export const Chat: FunctionComponent = () => {
           />
         </button>
       </div>
-      <div className="flex flex-col justify-between bg-black/20 w-full h-full rounded-xl p-2">
+      <div className="flex flex-col justify-between bg-black/20 w-full h-full rounded-xl p-2 overflow-hidden">
         <div className="flex flex-row items-center">
           <PlayerCounter />
           <WikiButton>Buscar</WikiButton>
         </div>
-        <div className="flex flex-col gap-2 w-full h-full justify-end p-2">
+        <div className="flex flex-col gap-2 w-full h-full justify-end p-2 overflow-auto">
           {messages.map(({ role, ...message }, key) => {
             return <Message role={role} props={message} key={key} />;
           })}
