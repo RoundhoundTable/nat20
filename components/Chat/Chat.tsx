@@ -126,7 +126,7 @@ export const Chat: FunctionComponent = () => {
             type="text"
             ref={inputRef}
             placeholder="Prueba /r d20..."
-            className="bg-black/20 outline-none w-full pl-3 py-1 rounded-l-full placeholder:text-primary-500 placeholder:font-thin focus:bg-black/50 peer"
+            className="bg-black/20 outline-none w-full pl-3 py-1 rounded-l-full placeholder:text-primary-500 placeholder:font-thin focus:bg-black/50"
           />
           <div className="flex flex-row bg-black/20 w-fit h-full rounded-r-full items-center px-3 gap-4">
             <div className="relative top-0 left-0 grid items-center justify-center w-full h-full">
