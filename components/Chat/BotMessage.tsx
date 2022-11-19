@@ -5,5 +5,5 @@ export interface IBotMessageData {
 }
 
 export const BotMessage: FunctionComponent<IBotMessageData> = (props) => {
-  return <div>{props.message}</div>;
+  return <p className="whitespace-pre-wrap">{props.message}</p>;
 };
