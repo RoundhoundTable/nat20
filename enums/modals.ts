@@ -5,4 +5,5 @@ export enum EModals {
   REGISTER = "REGISTER",
   LOGIN = "LOGIN",
   WIKI = "WIKI",
+  PLAYER_LIST = "PLAYER_LIST",
 }

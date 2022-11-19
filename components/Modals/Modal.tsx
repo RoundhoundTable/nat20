@@ -6,8 +6,9 @@ import ConfirmationModal from "./ConfirmationModal";
 import CreateGameModal from "./CreateGameModal";
 import JoinGameModal from "./JoinGameModal";
 import LoginModal from "./LoginModal";
+import PlayerListModal from "./PlayerListModal";
 import RegisterModal from "./RegisterModal";
-import {WikiModal} from "./WikiModal";
+import { WikiModal } from "./WikiModal";
 
 interface IModalProps {
   modal: EModals;
@@ -28,6 +29,8 @@ const getModal = (modal: EModals, props?: any) => {
       return <ConfirmationModal {...props} />;
     case EModals.WIKI:
       return <WikiModal />;
+    case EModals.PLAYER_LIST:
+      return <PlayerListModal />;
     default:
       return <></>;
   }
@@ -49,15 +52,5 @@ const Modal: FunctionComponent<IModalProps> = ({ modal, props }) => {
     </div>
   );
 };
-/*
-    <div className="absolute top-0 left-0 ml-1/2">
-      <div className=" mx-28 h-fit max-w-fit min-w-fit border-2 rounded-lg flex">
-        <div className=" p-5 m-5 h-fit text-white rounded-sm flex content-center">
-          <div className="p-3 flex-row justify-content-center">
-            
-          </div>
-        </div>
-      </div>
-      
-    </div>*/
+
 export default Modal;
