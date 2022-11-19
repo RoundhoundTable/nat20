@@ -7,6 +7,6 @@ export interface IUser {
 
 export interface ICharacter extends Character {
   currentHp: number;
-  death_throws?: (boolean | null)[];
+  death_throws: (boolean | null)[];
   stats: Record<string, number> | Prisma.JsonValue;
 }
