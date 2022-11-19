@@ -8,9 +8,9 @@ export interface IDMMessageData {
 export const DMMessage: FunctionComponent<IDMMessageData> = (props) => {
   return (
     <div className="flex flex-col h-fit">
-      <div className="flex flex-col w-fit border-b-2 border-yellow-200">
+      <div className="flex flex-col border-b-2 border-yellow-200">
         <span className="text-yellow-200 font-bold">Dungeon Master</span>
-        <span className="text-white">{props.message}</span>
+        <span className="text-white break-words">{props.message}</span>
       </div>
       {props.media && (
         <img

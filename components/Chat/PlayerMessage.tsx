@@ -20,9 +20,9 @@ export const PlayerMessage: FunctionComponent<IPlayerMessageData> = (props) => {
             className="p-5 object-cover"
           />
         </div>
-        <div className="flex flex-col border-b-2 border-primary-500">
+        <div className="flex flex-col overflow-hidden border-b-2 border-primary-500 shrink">
           <span className="text-primary-500 font-bold">{props.name}</span>
-          <span className="text-white">{props.message}</span>
+          <span className="text-white break-words">{props.message}</span>
         </div>
       </div>
       {props.media && (
