@@ -26,7 +26,7 @@ export const CharacterDisplay: FunctionComponent<ICharacterDisplayData> = (
   props
 ) => {
   return (
-    <div className="grid items-center justify-center w-full p-2 bg-black/20">
+    <div className="grid items-center justify-center w-full p-2 bg-black/20 mb-8">
       <div className="w-fit flex flex-col md:flex-row gap-2 md:gap-5 justify-center items-center">
         <div className="flex flex-row gap-2 md:gap-5 justify-center items-center">
           <img
