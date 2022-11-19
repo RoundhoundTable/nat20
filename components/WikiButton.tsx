@@ -6,16 +6,15 @@ import { EModals } from "../enums/modals";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const WikiButton: FunctionComponent<ButtonProps> = ({ children, ...props }) => {
-
   const { setModal } = useModal();
 
   return (
     <button
       {...props}
-      className="flex flex-row items-center p-2 capitalize hover:bg-black/40 text-primary-500 bg-black/30 gap-1"
+      className="flex flex-row items-center p-2 font-bold border-[1px] drop-shadow-lg bg-primary-500 text-background-500 gap-1 border-primary-500 hover:bg-background-500 hover:text-primary-500 rounded-full"
       onClick={() => setModal(EModals.WIKI)}
     >
-      <Icon icon="ant-design:search-outlined" />
+      <Icon icon="ant-design:search-outlined" className="w-6 h-6" />
       {children}
     </button>
   );
