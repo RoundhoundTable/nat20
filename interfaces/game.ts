@@ -5,6 +5,7 @@ export interface IMessage {
   role: EMessages;
   name?: string;
   thumbnail?: string;
+  media?: string;
   message: string;
 }
 

@@ -72,26 +72,29 @@ export default function handler(req: any, res: any) {
       io.sockets.in(room.id).emit(EVENTS.REFRESH_UI, room.get());
     });
 
-    socket.on(EVENTS.SEND_MESSAGE, (message: string) => {
-      const room = RoomHandler.socketRooms.get(socket);
+    socket.on(
+      EVENTS.SEND_MESSAGE,
+      (obj: Pick<IMessage, "message" | "media">) => {
+        const room = RoomHandler.socketRooms.get(socket);
 
-      if (!room) return false;
+        if (!room) return false;
 
-      let messageObj: IMessage = {
-        role:
-          room.dungeonMaster?.id === socket.id
-            ? EMessages.DM
-            : EMessages.PLAYER,
-        message,
-      };
+        let messageObj: IMessage = {
+          role:
+            room.dungeonMaster?.id === socket.id
+              ? EMessages.DM
+              : EMessages.PLAYER,
+          ...obj,
+        };
 
-      if (messageObj.role === EMessages.PLAYER) {
-        messageObj.name = room.players.get(socket.id)?.name;
-        messageObj.thumbnail = room.players.get(socket.id)?.picture;
+        if (messageObj.role === EMessages.PLAYER) {
+          messageObj.name = room.players.get(socket.id)?.name;
+          messageObj.thumbnail = room.players.get(socket.id)?.picture;
+        }
+
+        io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
       }
-
-      io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
-    });
+    );
 
     socket.on(EVENTS.THROW_DICE, (args: string) => {
       const room = RoomHandler.socketRooms.get(socket);
@@ -131,7 +134,7 @@ export default function handler(req: any, res: any) {
 
       let messageObj: IMessage = {
         role: EMessages.BOT,
-        message: `${args}:  ${resultString} \n Total: ${result}`,
+        message: `🎲 ${args}:  ${resultString} \n Total: ${result}`,
       };
 
       io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);

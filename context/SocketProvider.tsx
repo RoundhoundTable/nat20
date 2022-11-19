@@ -6,6 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 import useGame from "../hooks/useGame";
 import { EVENTS } from "../enums/events";
 import Router from "next/router";
+import { IMessage } from "../interfaces/game";
 
 export const SocketContext = createContext<ISocketContext | null>(null);
 
@@ -75,12 +76,15 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
       socket.emit(EVENTS.JOIN_ROOM, { id, password, characterId });
   };
 
-  const sendMessage = (message: string) => {
-    if (!socket) return;
+  const sendMessage = (obj: Pick<IMessage, "message" | "media">) => {
+    if (!socket || (!obj.message && !obj.media)) return;
 
-    if (message.startsWith("/roll") || message.startsWith("/r"))
-      socket.emit(EVENTS.THROW_DICE, message.split(" ")[1]);
-    else socket.emit(EVENTS.SEND_MESSAGE, message);
+    if (
+      obj.message.startsWith("/roll") ||
+      (obj.message.startsWith("/r") && !obj.message)
+    )
+      socket.emit(EVENTS.THROW_DICE, obj.message.split(" ")[1]);
+    else socket.emit(EVENTS.SEND_MESSAGE, obj);
   };
 
   const value = {

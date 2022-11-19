@@ -18,7 +18,7 @@ export interface ISocketContext {
   initializeSocket: () => Promise<void>;
   joinRoom: (id: string, password: string, characterId: string) => void;
   createRoom: (password: string) => void;
-  sendMessage: (message: string) => void;
+  sendMessage: (message: Pick<IMessage, "message" | "media">) => void;
 }
 
 export interface IGameContext {
