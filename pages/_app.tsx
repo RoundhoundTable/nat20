@@ -58,7 +58,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <GameProvider>
             <SocketProvider>
               <ModalProvider>
-                <Component {...pageProps} />
+                <div className="font-poppins">
+                  <Component {...pageProps} />
+                </div>
               </ModalProvider>
             </SocketProvider>
           </GameProvider>
