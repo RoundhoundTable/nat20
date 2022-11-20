@@ -20,13 +20,9 @@ export const PlayerView: NextComponentType = () => {
       <div className="w-full">
         {character && (
           <CharacterDisplay
-            picture="https://picsum.photos/900/100"
-            name={character.name}
+            {...character}
             _class={character.class}
-            level={character.level}
-            initiative={character.initiative}
             CA={character.classArmor}
-            hitPoints={character.hitPoints}
             currentHitPoints={character.currentHp}
             stats={character.stats as Record<string, number>}
             savingThrows={character.death_throws!}
