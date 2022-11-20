@@ -2,16 +2,16 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { ApolloContext } from "../../../../interfaces/apollo";
 import { ILoginMutationInput } from "../../../../interfaces/graphql";
 import { auth } from "../../../../libs/firebaseAdmin";
-import { auth as clientAuth } from "../../../../libs/firebaseApp";
+import app from "../../../../libs/firebaseApp";
 
 const LoginMutationHandler = async (
   _parent: unknown,
   { credentials }: ILoginMutationInput,
-  ctx: ApolloContext
+  _: ApolloContext
 ) => {
   try {
     const firebaseCredentials = await signInWithEmailAndPassword(
-      clientAuth,
+      app.auth,
       credentials.email,
       credentials.password
     );

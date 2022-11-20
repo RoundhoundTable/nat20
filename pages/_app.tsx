@@ -7,7 +7,7 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
-import { auth } from "../libs/firebaseApp";
+import app from "../libs/firebaseApp";
 import { setContext } from "@apollo/client/link/context";
 import AuthProvider from "../context/AuthProvider";
 import SocketProvider from "../context/SocketProvider";
@@ -19,7 +19,7 @@ const httpLink = new HttpLink({
   uri: "/api/graphql",
 });
 
-const getIdToken = async () => await auth.currentUser?.getIdToken();
+const getIdToken = async () => await app.auth.currentUser?.getIdToken();
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await getIdToken();

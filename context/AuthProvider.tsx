@@ -7,7 +7,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { IAuthContext } from "../interfaces/context";
 import { IUser } from "../interfaces/entities";
 import { useApolloClient, gql } from "@apollo/client";
-import { auth } from "../libs/firebaseApp";
+import app from "../libs/firebaseApp";
 
 export const AuthContext = createContext<IAuthContext | null>(null);
 
@@ -17,15 +17,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const signIn = (token: string) => {
-    return signInWithCustomToken(auth, token);
+    return signInWithCustomToken(app.auth, token);
   };
 
   const signOut = (): any => {
-    return firebaseSignOut(auth);
+    return firebaseSignOut(app.auth);
   };
 
   const signUp = (token: string) => {
-    return signInWithCustomToken(auth, token);
+    return signInWithCustomToken(app.auth, token);
   };
 
   const fetch = async () => {
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = app.auth.onAuthStateChanged(async (user) => {
       await fetch();
       setLoading(false);
     });

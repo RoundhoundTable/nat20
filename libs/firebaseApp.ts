@@ -1,5 +1,6 @@
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 if (!getApps().length) {
   try {
@@ -16,4 +17,7 @@ if (!getApps().length) {
   }
 }
 
-export const auth = getAuth();
+const auth = getAuth();
+const storage = getStorage();
+
+export default { auth, storage };

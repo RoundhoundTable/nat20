@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ApolloContext } from "../../../../interfaces/apollo";
 import { IRegisterMutationInput } from "../../../../interfaces/graphql";
 import { auth } from "../../../../libs/firebaseAdmin";
-import { auth as clientAuth } from "../../../../libs/firebaseApp";
+import app from "../../../../libs/firebaseApp";
 
 const RegisterMutationHandler = async (
   _parent: unknown,
@@ -11,7 +11,7 @@ const RegisterMutationHandler = async (
 ) => {
   try {
     const firebaseCredentials = await createUserWithEmailAndPassword(
-      clientAuth,
+      app.auth,
       credentials.email,
       credentials.password
     );
