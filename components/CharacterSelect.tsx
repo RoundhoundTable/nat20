@@ -6,7 +6,7 @@ import { Character } from "./Character";
 
 type CharacterSelectProps = {};
 type CharacterSelectHandle = {
-  selected: ICharacter;
+  selected: ICharacter | null;
 };
 
 const CharacterSelect: React.ForwardRefRenderFunction<
@@ -15,13 +15,24 @@ const CharacterSelect: React.ForwardRefRenderFunction<
 > = (_, ref) => {
   const { characters } = useUserCharacterList();
   const [showList, setShowList] = useState<boolean>(false);
-  const [selected, setSelected] = useState<ICharacter>(characters[0]);
+  const [selected, setSelected] = useState<ICharacter | null>(null);
 
   const toggleList = () => setShowList(!showList);
 
   useImperativeHandle(ref, () => ({
     selected,
   }));
+
+  useEffect(() => {
+    if (characters) setSelected(characters[0]);
+  }, [characters]);
+
+  if (!characters || characters.length === 0)
+    return (
+      <div className="bg-black/30 text-primary-500 p-6 w-full rounded-xl border-b-2 border-b-primary-500">
+        You must have at least one character
+      </div>
+    );
 
   return (
     <div className="relative w-full">
@@ -30,7 +41,7 @@ const CharacterSelect: React.ForwardRefRenderFunction<
         icon="material-symbols:keyboard-arrow-down-rounded"
         onClick={toggleList}
       />
-      {characters && (
+      {selected && (
         <Character
           {...selected}
           _class={selected.class}
@@ -53,7 +64,7 @@ const CharacterSelect: React.ForwardRefRenderFunction<
 
               let className = "bg-background-500 ";
 
-              if (character.id === selected.id)
+              if (character.id === selected?.id)
                 className +=
                   "border-x-2 border-x-primary-500 shadow-[0px_10px_15px_#F6E3B9AA] ";
 
