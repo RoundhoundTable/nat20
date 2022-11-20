@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button,
+input[type='number'] {
+-webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+}
+
 *::-webkit-scrollbar {
     width:7px;
     height: 7px;
