@@ -19,11 +19,7 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
     await fetch("/api/socket");
     const _socket = io();
 
-    _socket.on(EVENTS.CONNECTED_TO_ROOM, (args) => {
-      setRoom(args);
-    });
-
-    _socket.on(EVENTS.REFRESH_UI, (args) => {
+    _socket.on(EVENTS.REFRESH_ROOM, (args) => {
       setRoom(args);
     });
 
@@ -51,15 +47,6 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
       }, 4000);
     });
 
-    _socket.on(EVENTS.USER_LEFT, (message) =>
-      setMessages((state) => [
-        ...state,
-        {
-          ...message,
-        },
-      ])
-    );
-
     setSocket(_socket);
   };
 
@@ -68,10 +55,6 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const joinRoom = (id: string, password: string, characterId: string) => {
-    console.log({
-      event: EVENTS.JOIN_ROOM,
-      data: { id, password, characterId },
-    });
     if (currentUser && socket)
       socket.emit(EVENTS.JOIN_ROOM, { id, password, characterId });
   };
@@ -79,10 +62,7 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
   const sendMessage = (obj: Pick<IMessage, "message" | "media">) => {
     if (!socket || (!obj.message && !obj.media)) return;
 
-    if (
-      obj.message.startsWith("/roll") ||
-      (obj.message.startsWith("/r") && !obj.message)
-    )
+    if (obj.message.startsWith("/roll") || obj.message.startsWith("/r"))
       socket.emit(EVENTS.THROW_DICE, obj.message.split(" ")[1]);
     else socket.emit(EVENTS.SEND_MESSAGE, obj);
   };

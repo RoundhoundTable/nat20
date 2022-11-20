@@ -34,7 +34,7 @@ export default function handler(req: any, res: any) {
       RoomHandler.rooms.set(id, room);
       RoomHandler.socketRooms.set(socket, room);
 
-      socket.emit(EVENTS.CONNECTED_TO_ROOM, room.get());
+      socket.emit(EVENTS.REFRESH_ROOM, room.get());
     });
 
     socket.on(EVENTS.JOIN_ROOM, async ({ id, password, characterId }) => {
@@ -59,7 +59,13 @@ export default function handler(req: any, res: any) {
 
       RoomHandler.socketRooms.set(socket, room);
 
-      io.sockets.in(room.id).emit(EVENTS.CONNECTED_TO_ROOM, room.get());
+      let messageObj: IMessage = {
+        role: EMessages.BOT,
+        message: `${character?.name} se ha unido a la sala`,
+      };
+
+      io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
+      io.sockets.in(room.id).emit(EVENTS.REFRESH_ROOM, room.get());
     });
 
     socket.on(EVENTS.UPDATE_CHARACTER, ({ id, payload }) => {
@@ -69,7 +75,7 @@ export default function handler(req: any, res: any) {
 
       room.updateCharacter(id, payload);
 
-      io.sockets.in(room.id).emit(EVENTS.REFRESH_UI, room.get());
+      io.sockets.in(room.id).emit(EVENTS.REFRESH_ROOM, room.get());
     });
 
     socket.on(
@@ -156,8 +162,8 @@ export default function handler(req: any, res: any) {
           message: `${character?.name} ha salido de la sala`,
         };
 
-        io.sockets.in(room.id).emit(EVENTS.USER_LEFT, messageObj);
-        io.sockets.in(room.id).emit(EVENTS.REFRESH_UI, room.get());
+        io.sockets.in(room.id).emit(EVENTS.MESSAGE, messageObj);
+        io.sockets.in(room.id).emit(EVENTS.REFRESH_ROOM, room.get());
       } else {
         let messageObj: IMessage = {
           role: EMessages.BOT,
