@@ -1,39 +1,106 @@
-import { ApolloError } from "@apollo/client";
 import { useState } from "react";
+import { z } from "zod";
+import { Nat20Error } from "../utils/Nat20Error";
+import { formatError } from "../utils/formatError";
 
-export const useForm = <T>({ initialValue }: { initialValue?: T }) => {
-  const [form, setForm] = useState<T>(initialValue as T);
-  const [errors, setErrors] = useState<T | null>();
+export const useForm = <T>({
+  initialValue,
+  schema,
+}: {
+  initialValue?: T;
+  schema?: z.AnyZodObject | z.ZodEffects<any, any, any>;
+}) => {
+  const [form, setForm] = useState<T>((initialValue ?? {}) as T);
+  const [errors, setErrors] = useState<T>();
 
-  const onChange = (ev: any) =>
+  const onChange = (ev: any) => {
+    if (ev.target.type === "number" && !/^-?\d+$/.test(ev.target.value)) return;
+
+    if (ev.target.name.includes(".")) {
+      const [parent, child] = ev.target.name.split(".");
+
+      setForm({
+        ...form,
+        [parent]: {
+          ...form[parent as keyof T],
+          [child]: ev.target.value,
+        } as T,
+      } as T);
+
+      return;
+    }
+
     setForm({
       ...form,
       [ev.target.name]: ev.target.value,
     } as T);
 
-  const resetErrors = () => {
-    setErrors(null);
+    return;
   };
 
-  const updateForm = (newForm: T) => setForm({ ...form, ...newForm });
+  const resetErrors = () => {
+    setErrors(undefined);
+  };
+
+  const updateForm = (newForm: Partial<T>) =>
+    setForm((state) => {
+      return { ...state, ...newForm };
+    });
 
   const resetForm = () => setForm(initialValue as T);
 
-  const submit = async ({
-    ev,
-    func,
-  }: {
-    ev?: any;
-    func: (...args: any) => any;
-  }) => {
+  const submit = ({ ev, func }: { ev?: any; func: (...args: any) => any }) => {
     try {
       if (ev) ev.preventDefault();
 
-      resetErrors();
+      if (schema) {
+        const result = schema.safeParse({
+          ...form,
+        });
+
+        resetErrors();
+        if (!result.success) throw formatError<T>(result.error);
+      }
 
       func();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err instanceof Array<Nat20Error>) {
+        err.forEach((natError) => {
+          if (natError.field.includes(".")) {
+            const [parent, child] = natError.field.split(".");
+
+            setErrors(
+              (state) =>
+                ({
+                  ...state,
+                  [parent]: {
+                    ...state![parent as keyof T],
+                    [child]: natError.message,
+                  },
+                } as T)
+            );
+
+            return;
+          } else if (natError.field.includes("+")) {
+            const [field, sibling] = natError.field.split("+");
+
+            setErrors(
+              (state) =>
+                ({
+                  ...state,
+                  [field]: natError.message,
+                  [sibling]: natError.message,
+                } as T)
+            );
+
+            return;
+          }
+
+          setErrors((state) => {
+            return { ...state, [natError.field]: natError.message } as T;
+          });
+        });
+      }
     }
   };
 
