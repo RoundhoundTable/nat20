@@ -28,11 +28,13 @@ export const Input = forwardRef(
     } = _props;
 
     return (
-      <label className="flex flex-col text-medium text-left text-primary-500 mt-2 w-full">
-        {label}
+      <div className="w-full">
+        <p className="text-medium text-left text-primary-500 mt-2 font-poppins">
+          {label}
+        </p>
         <input
           className={twMerge(
-            "bg-black/30 text-white border-b-2 border-primary-500 px-2 sm:w-80 sm:h-9 w-60 rounded-lg focus:outline-none",
+            "bg-black/30 border-b-2 border-primary-500 text-primary-500 px-2 w-full h-9 rounded-lg focus:outline-none",
             className,
             error?.message ? errorClassName : ""
           )}
@@ -44,7 +46,7 @@ export const Input = forwardRef(
             {error.message}
           </div>
         )}
-      </label>
+      </div>
     );
   }
 );
