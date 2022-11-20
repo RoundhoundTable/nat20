@@ -9,6 +9,7 @@ const typeDefs = gql`
   type Mutation {
     register(credentials: RegisterMutationInput!): String
     login(credentials: LoginMutationInput!): String
+    createCharacter(payload: CharacterCreateInput!): Boolean
     deleteCharacter(id: String!): Boolean
   }
 
@@ -27,6 +28,20 @@ const typeDefs = gql`
   input LoginMutationInput {
     email: String!
     password: String!
+  }
+
+  input CharacterCreateInput {
+    name: String!
+    race: String!
+    class: String!
+    level: Int!
+    initiative: Int!
+    hitPoints: Int!
+    proficiencyBonus: Int!
+    speed: Int!
+    classArmor: Int!
+    picture: String!
+    stats: String!
   }
 
   type Character {
