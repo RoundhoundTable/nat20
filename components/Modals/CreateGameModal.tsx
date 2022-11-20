@@ -2,33 +2,43 @@ import { NextComponentType } from "next";
 import { Input } from "../Input";
 import Button from "../Button";
 import { useSocket } from "../../hooks/useSocket";
-import { useState } from "react";
 import useModal from "../../hooks/useModal";
+import { createRoomSchema } from "../../validation/Room";
+import { useForm } from "../../hooks/useForm";
+
+interface CreateGameForm {
+  password: string;
+}
 
 const CreateGameModal: NextComponentType = () => {
   const { createRoom } = useSocket();
   const { unsetModal } = useModal();
-  const [password, setPassword] = useState<string>("");
+  const { form, onChange, errors, submit } = useForm<CreateGameForm>({
+    schema: createRoomSchema,
+  });
 
-  const handleCreate = () => {
-    createRoom(password);
+  const handleCreate = async () => {
+    createRoom(form.password);
     unsetModal();
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <form
+      className="flex flex-col items-center gap-5"
+      onSubmit={(ev: any) => submit({ ev, func: handleCreate })}
+    >
       <p className="text-2xl font-bold uppercase text-primary-500">
         Create Game
       </p>
       <Input
-        onChange={(ev) => setPassword(ev.target.value)}
-        value={password}
         name="password"
         label="Password"
         type={"password"}
+        onChange={onChange}
+        error={errors?.password}
       />
-      <Button onClick={handleCreate}>Create</Button>
-    </div>
+      <Button>Create</Button>
+    </form>
   );
 };
 

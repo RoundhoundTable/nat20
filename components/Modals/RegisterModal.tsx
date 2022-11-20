@@ -5,8 +5,9 @@ import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "../../hooks/useForm";
 import { gql } from "apollo-server-core";
 import { useMutation } from "@apollo/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Router from "next/router";
+import { registerSchema } from "../../validation/Authentication";
 
 interface RegisterForm {
   email: string;
@@ -17,7 +18,9 @@ interface RegisterForm {
 
 const RegisterModal: NextComponentType = () => {
   const { signUp } = useAuth();
-  const { form, onChange, errors, submit } = useForm<RegisterForm>({});
+  const { form, onChange, submit, errors } = useForm<RegisterForm>({
+    schema: registerSchema,
+  });
   const [Register, { data }] = useMutation(
     gql`
       mutation Mutation($credentials: RegisterMutationInput!) {
@@ -57,28 +60,28 @@ const RegisterModal: NextComponentType = () => {
           label="Email"
           type={"email"}
           onChange={onChange}
-          error={{ message: errors?.email }}
+          error={errors?.email}
         />
         <Input
           name="username"
           label="Username"
           type={"text"}
           onChange={onChange}
-          error={{ message: errors?.username }}
+          error={errors?.username}
         />
         <Input
           name="password"
           label="Password"
           type={"password"}
           onChange={onChange}
-          error={{ message: errors?.password }}
+          error={errors?.password}
         />
         <Input
           name="confirmPassword"
           label="Confirm password"
           type={"password"}
           onChange={onChange}
-          error={{ message: errors?.confirmPassword }}
+          error={errors?.confirmPassword}
         />
         <Button type="submit">Sign Up</Button>
       </form>

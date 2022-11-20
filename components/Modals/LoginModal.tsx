@@ -6,6 +6,7 @@ import Router from "next/router";
 import { useAuth } from "../../hooks/useAuth";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "../../hooks/useForm";
+import { loginSchema } from "../../validation/Authentication";
 
 interface LoginForm {
   email: string;
@@ -14,7 +15,9 @@ interface LoginForm {
 
 const LoginModal: NextComponentType = () => {
   const { signIn } = useAuth();
-  const { form, onChange, errors, submit } = useForm<LoginForm>({});
+  const { form, onChange, submit, errors } = useForm<LoginForm>({
+    schema: loginSchema,
+  });
   const [Login, { data }] = useMutation(
     gql`
       mutation Mutation($credentials: LoginMutationInput!) {
@@ -54,14 +57,14 @@ const LoginModal: NextComponentType = () => {
           label="Email"
           type={"email"}
           onChange={onChange}
-          error={{ message: errors?.email }}
+          error={errors?.email}
         />
         <Input
           name="password"
           label="Password"
           type={"password"}
           onChange={onChange}
-          error={{ message: errors?.password }}
+          error={errors?.password}
         />
         <Button type="submit">Sign In</Button>
       </form>
