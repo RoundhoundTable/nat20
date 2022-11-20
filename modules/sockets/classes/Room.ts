@@ -48,8 +48,6 @@ class Room {
       let output: Record<string, ICharacter> = {};
 
       this.players.forEach((value, key) => {
-        let tempValue = value;
-        tempValue.stats = JSON.parse(value.stats as string);
         output[key] = value;
       });
 
