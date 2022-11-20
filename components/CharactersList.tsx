@@ -3,9 +3,12 @@ import { useState } from "react";
 import { Character } from "./Character";
 import { twMerge } from "tailwind-merge";
 import { useUserCharacterList } from "../hooks/useUserCharacterList";
+import useModal from "../hooks/useModal";
+import { EModals } from "../enums/modals";
 
 export const CharactersList: NextComponentType = () => {
   const { characters, isLoading } = useUserCharacterList();
+  const { setModal } = useModal();
   const [viewList, setViewList] = useState<boolean>(false);
 
   return (
@@ -39,7 +42,10 @@ export const CharactersList: NextComponentType = () => {
               ))
             )}
           </div>
-          <button className="sticky bottom-0 bg-[#21222A] text-white font-bold w-full h-16 text-center">
+          <button
+            className="sticky bottom-0 bg-[#21222A] text-white font-bold w-full h-16 text-center"
+            onClick={() => setModal(EModals.CHARACTER_CREATION)}
+          >
             New character
           </button>
         </>

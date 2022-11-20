@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent } from "react";
 import { EModals } from "../../enums/modals";
 import useModal from "../../hooks/useModal";
 import ConfirmationModal from "./ConfirmationModal";
@@ -8,6 +8,7 @@ import JoinGameModal from "./JoinGameModal";
 import LoginModal from "./LoginModal";
 import PlayerListModal from "./PlayerListModal";
 import RegisterModal from "./RegisterModal";
+import CharacterCreationModal from "./CharacterCreationModal";
 import { WikiModal } from "./WikiModal";
 
 interface IModalProps {
@@ -31,6 +32,8 @@ const getModal = (modal: EModals, props?: any) => {
       return <WikiModal />;
     case EModals.PLAYER_LIST:
       return <PlayerListModal />;
+    case EModals.CHARACTER_CREATION:
+      return <CharacterCreationModal />;
     default:
       return <></>;
   }
@@ -39,8 +42,12 @@ const getModal = (modal: EModals, props?: any) => {
 const Modal: FunctionComponent<IModalProps> = ({ modal, props }) => {
   const { unsetModal } = useModal();
   return (
-    <div className="fixed bg-[#25273520] backdrop-blur-md w-screen h-screen z-40">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50 max-h-screen overflow-auto">
+    <div className="absolute bg-[#25273520] backdrop-blur-md w-screen h-screen z-40 overflow-visible">
+      <div
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#252735] p-8 border-4 border-[#44465A] z-50 max-h-screen w-min ${
+          modal === EModals.JOIN_GAME ? "overflow-visible" : "overflow-auto"
+        }`}
+      >
         <Icon
           onClick={unsetModal}
           className="absolute right-0 top-0 mr-2 mt-2"
