@@ -12,16 +12,14 @@ interface IInputProps
   > {
   label?: string;
   errorClassName?: string;
-  error?: {
-    message?: string;
-  };
+  error?: string | boolean;
 }
 
 export const Input = forwardRef(
   (_props: IInputProps, ref: ForwardedRef<HTMLInputElement>) => {
     const {
       label,
-      errorClassName = "border-b-2 border-danger-500",
+      errorClassName = "border-b-2 border-danger-800",
       error,
       className,
       ...props
@@ -36,15 +34,13 @@ export const Input = forwardRef(
           className={twMerge(
             "bg-black/30 border-b-2 border-primary-500 text-primary-500 px-2 w-full h-9 rounded-lg focus:outline-none",
             className,
-            error?.message ? errorClassName : ""
+            error ? errorClassName : ""
           )}
           {...props}
           ref={ref}
         />
-        {error?.message && (
-          <div className="text-xs font-light text-danger-500">
-            {error.message}
-          </div>
+        {error && typeof error === "string" && (
+          <div className="text-xs font-light text-danger-800">{error}</div>
         )}
       </div>
     );
