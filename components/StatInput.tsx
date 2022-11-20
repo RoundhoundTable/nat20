@@ -5,10 +5,12 @@ const StatInput = ({
   label,
   name,
   onChange,
+  error,
 }: {
   label: string;
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  error?: boolean;
 }) => {
   return (
     <div className="flex flex-col text-center">
@@ -19,6 +21,7 @@ const StatInput = ({
         max={99}
         name={name}
         onChange={onChange}
+        error={error}
       />
     </div>
   );
