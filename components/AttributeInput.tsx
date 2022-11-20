@@ -1,22 +1,26 @@
 import { Icon } from "@iconify/react";
-import { ChangeEventHandler, EventHandler } from "react";
+import { ChangeEventHandler } from "react";
 
 const AttributeInput = ({
   placeholder,
   icon,
   name,
   onChange,
+  error,
 }: {
   placeholder: string;
   icon: string;
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  error?: boolean;
 }) => {
   return (
     <div className="relative flex flex-row align-middle items-center">
       <Icon
         icon={icon}
-        className="text-black/20 stroke-primary-500 stroke-1 w-20 h-auto"
+        className={`text-black/20 ${
+          error ? "stroke-danger-800" : "stroke-primary-500"
+        } stroke-1 w-20 h-auto`}
       />
       <input
         placeholder={placeholder}
