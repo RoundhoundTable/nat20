@@ -95,7 +95,6 @@ export const Chat: FunctionComponent = () => {
       <div className="flex flex-col justify-between bg-black/20 w-full h-full rounded-xl p-2 overflow-hidden">
         <div className="flex flex-row items-center gap-6">
           <PlayerCounter />
-          <WikiButton>Buscar</WikiButton>
         </div>
         <div className="flex flex-col gap-2 w-full h-full p-2 overflow-auto z-10">
           {messages.map(({ role, ...message }, key) => {
