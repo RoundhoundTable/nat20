@@ -13,13 +13,16 @@ const CreateCharacterHandler = async (
 
     const { stats, picture, ...characterData } = payload;
 
-    const { downloadUrl } = await uploadImage(picture, uuidv4());
+    let downloadUrl = undefined;
+
+    if (picture)
+      downloadUrl = (await uploadImage(picture, uuidv4())).downloadUrl;
 
     const character = await ctx.prisma.character.create({
       data: {
         ...characterData,
         stats: JSON.parse(stats as string) as Prisma.JsonObject,
-        picture: downloadUrl ?? "",
+        picture: downloadUrl ?? undefined,
         userId: ctx.user.id,
       },
     });

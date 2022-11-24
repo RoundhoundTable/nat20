@@ -88,12 +88,15 @@ const CharacterCreationModal: NextComponentType = () => {
     if (ready) createCharacter();
   }, [ready]);
 
-  const checkStatError = (stat: string) =>
-    Boolean(
-      typeof errors?.stats === "string"
+  const checkStatError = (stat: string) => {
+    if (!errors?.stats) return false;
+
+    return Boolean(
+      typeof errors.stats === "string"
         ? true
-        : errors?.stats[stat as keyof IStats]
+        : errors.stats[stat as keyof IStats]
     );
+  };
 
   return (
     <form

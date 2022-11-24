@@ -40,7 +40,7 @@ const typeDefs = gql`
     proficiencyBonus: Int!
     speed: Int!
     classArmor: Int!
-    picture: String!
+    picture: String
     stats: String!
   }
 
