@@ -3,7 +3,6 @@ import { FunctionComponent, useRef, useState } from "react";
 import useGame from "../../hooks/useGame";
 import { useSocket } from "../../hooks/useSocket";
 import { IMessage } from "../../interfaces/game";
-import WikiButton from "../WikiButton";
 import { Message } from "./Message";
 import PlayerCounter from "./PlayerCounter";
 
@@ -57,36 +56,42 @@ export const Chat: FunctionComponent = () => {
       <div className="flex flex-row justify-end">
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d4" })}
             icon="mdi:dice-d4-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
         </button>
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d6" })}
             icon="mdi:dice-d6-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
         </button>
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d8" })}
             icon="mdi:dice-d8-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
         </button>
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d10" })}
             icon="mdi:dice-d10-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
         </button>
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d12" })}
             icon="mdi:dice-d12-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
         </button>
         <button>
           <Icon
+            onClick={() => sendMessage({ message: "/roll 1d20" })}
             icon="mdi:dice-d20-outline"
             className="w-7 h-7 drop-shadow-[0px_0px_2px_#F6E3B9]"
           />
