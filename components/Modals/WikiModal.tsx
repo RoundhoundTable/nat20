@@ -18,12 +18,11 @@ export const WikiModal: NextComponentType = () => {
     const [SearchMagic, setSearchMagic] = useState<boolean>(false);
 
     return (
-        <div className="px-20 flex flex-col">
-            {/* <input type="text" className="bg-background-700 border-2 border-primary-500 text-primary-500" /> */}
-            <span className="flex flex-row items-center gap-1 p-2 bg-transparent text-primary-500 border-2 border-primary-500">
-                Buscar
+        <div className="px-20 flex flex-col h-96">
+            <div className="flex flex-row items-center gap-1 p-2 bg-transparent text-primary-500 border-2 border-primary-500 w-[382px]">
                 <Icon icon="ant-design:search-outlined"/>
-            </span>
+                <input placeholder="Buscar" type="text" className="bg-background-600 text-primary-500 w-full placeholder:text-primary-500 focus:outline-none" />
+            </div>
             <div className="flex flex-col text-primary-500 border-2 border-background-300 p-2 gap-2">
                 <button className="flex flex-row items-center border-b-2 border-background-400 gap-1 hover:bg-background-500" onClick={() => setSearchWeapons(!SearchWeapons)}>
                     <Icon icon="charm:sword"/>

@@ -50,7 +50,7 @@ const Modal: FunctionComponent<IModalProps> = ({ modal, props }) => {
       >
         <Icon
           onClick={unsetModal}
-          className="absolute right-0 top-0 mr-2 mt-2"
+          className="sticky right-0 top-0 mr-2"
           color="#F6E3B9"
           icon="akar-icons:cross"
         />

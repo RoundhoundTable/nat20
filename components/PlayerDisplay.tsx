@@ -1,14 +1,5 @@
 import CaIcon from "../assets/images/CAIcon.svg";
-import {
-  FunctionComponent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { SavingThrow } from "./SavingThrow";
-import useGame from "../hooks/useGame";
-import { useSocket } from "../hooks/useSocket";
+import { FunctionComponent, useState } from "react";
 import HealthController from "./HealthController";
 
 interface ICharacterData {
@@ -36,6 +27,7 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
   deathThrows,
   isDm,
 }) => {
+  const [currHitPoints, sertCurrHitPoints] = useState(currentHitPoints);
   const healthPercent = (100 / hitPoints) * currentHitPoints;
 
   const getHealthColor = () => {
