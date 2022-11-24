@@ -12,7 +12,7 @@ const Armor: FunctionComponent = () => {
                 </div>
                 <div className="flex flex-col p-2 gap-2">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis illo ipsa facilis mollitia, suscipit enim aut tempora! Rerum cum nostrum, ab natus error accusantium, corporis quis impedit consequuntur, ex doloremque.
-                    <div className="flex flex-col p-2 gap-2 md:grid md:grid-cols-2 md:justify-start">
+                    <div className="flex flex-col p-2 gap-2 lg:grid lg:grid-cols-2 lg:justify-start">
                         <div className="flex flex-row gap-1">
                             <span className="font-medium">Category:</span>
                             armor_category

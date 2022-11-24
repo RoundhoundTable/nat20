@@ -1,6 +1,7 @@
 import CaIcon from "../assets/images/CAIcon.svg";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { SavingThrow } from "./SavingThrow";
+import { Icon } from "@iconify/react";
 
 interface ICharacterData {
   picture: string;
@@ -23,6 +24,7 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
   currentHitPoints,
   deathThrows,
 }) => {
+  const [ currHitPoints, sertCurrHitPoints ] = useState(currentHitPoints)
   const healthPercent = (100 / hitPoints) * currentHitPoints;
 
   const getHealthColor = () => {
@@ -43,9 +45,10 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
             }px ${getHealthColor()}`,
           }}
         />
-        <span>
-          {currentHitPoints}/{hitPoints}
-        </span>
+        <div className="flex flex-row justify items-center">
+          <input value={currHitPoints} className="bg-transparent w-7 focus:outline-none"  type="number" onChange={(ev) => sertCurrHitPoints(+ev.target.value)}/>
+          /{hitPoints}
+        </div>
       </div>
       <div className="flex flex-col w-1/2">
         <span className="font-bold">{name}</span>
