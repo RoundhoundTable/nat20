@@ -7,6 +7,7 @@ import useGame from "../hooks/useGame";
 import { EVENTS } from "../enums/events";
 import Router from "next/router";
 import { IMessage } from "../interfaces/game";
+import { ICharacter } from "../interfaces/entities";
 
 export const SocketContext = createContext<ISocketContext | null>(null);
 
@@ -67,12 +68,19 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
     else socket.emit(EVENTS.SEND_MESSAGE, obj);
   };
 
+  const updateCharacter = (id: string, payload: Partial<ICharacter>) => {
+    if (!socket) return;
+
+    socket.emit(EVENTS.UPDATE_CHARACTER, { id, payload });
+  };
+
   const value = {
     socket,
     initializeSocket,
     joinRoom,
     createRoom,
     sendMessage,
+    updateCharacter,
   };
 
   return (

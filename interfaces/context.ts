@@ -1,6 +1,6 @@
 import type { UserCredential } from "firebase/auth";
 import { Socket } from "socket.io-client";
-import { IUser } from "./entities";
+import { ICharacter, IUser } from "./entities";
 import { EModals } from "../enums/modals";
 import { Dispatch, SetStateAction } from "react";
 import { IMessage, IRoomState } from "./game";
@@ -19,6 +19,7 @@ export interface ISocketContext {
   joinRoom: (id: string, password: string, characterId: string) => void;
   createRoom: (password: string) => void;
   sendMessage: (message: Pick<IMessage, "message" | "media">) => void;
+  updateCharacter: (id: string, payload: Partial<ICharacter>) => void;
 }
 
 export interface IGameContext {
