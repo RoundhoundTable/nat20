@@ -1,8 +1,18 @@
 import CaIcon from "../assets/images/CAIcon.svg";
-import { FunctionComponent } from "react";
+import {
+  FunctionComponent,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { SavingThrow } from "./SavingThrow";
+import useGame from "../hooks/useGame";
+import { useSocket } from "../hooks/useSocket";
+import HealthController from "./HealthController";
 
 interface ICharacterData {
+  id: string;
   picture: string;
   name: string;
   _class: string;
@@ -11,9 +21,11 @@ interface ICharacterData {
   hitPoints: number;
   currentHitPoints: number;
   deathThrows: (boolean | null)[];
+  isDm?: boolean;
 }
 
 export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
+  id,
   picture,
   name,
   _class,
@@ -22,6 +34,7 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
   hitPoints,
   currentHitPoints,
   deathThrows,
+  isDm,
 }) => {
   const healthPercent = (100 / hitPoints) * currentHitPoints;
 
@@ -32,7 +45,7 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
   };
 
   return (
-    <div className="flex flex-row w-full gap-4 items-center p-2 bg-background-600/50 snap-start text-primary-500 relative">
+    <div className="flex flex-row w-full gap-4 items-center p-2 snap-start text-primary-500 relative">
       <div className="flex flex-col items-center">
         <img
           src={picture}
@@ -43,9 +56,12 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
             }px ${getHealthColor()}`,
           }}
         />
-        <span>
-          {currentHitPoints}/{hitPoints}
-        </span>
+        <HealthController
+          current={currentHitPoints}
+          max={hitPoints}
+          id={id}
+          isDm={isDm}
+        />
       </div>
       <div className="flex flex-col w-1/2">
         <span className="font-bold">{name}</span>
@@ -60,7 +76,6 @@ export const PlayerDisplay: FunctionComponent<ICharacterData> = ({
           {CA}
         </span>
       </div>
-      <SavingThrow throws={deathThrows} />
     </div>
   );
 };
