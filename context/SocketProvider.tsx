@@ -63,9 +63,9 @@ const SocketProvider = ({ children }: { children: ReactNode }) => {
   const sendMessage = (obj: Pick<IMessage, "message" | "media">) => {
     if (!socket || (!obj.message && !obj.media)) return;
 
+    socket.emit(EVENTS.SEND_MESSAGE, obj);
     if (obj.message.startsWith("/roll") || obj.message.startsWith("/r"))
       socket.emit(EVENTS.THROW_DICE, obj.message.split(" ")[1]);
-    else socket.emit(EVENTS.SEND_MESSAGE, obj);
   };
 
   const updateCharacter = (id: string, payload: Partial<ICharacter>) => {
