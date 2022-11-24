@@ -35,12 +35,17 @@ class Room {
     }
   }
 
-  updateCharacter(socketId: string, payload: ICharacter) {
+  updateCharacter(socketId: string, payload: Partial<ICharacter>) {
     const character = this.players.get(socketId);
 
     if (!character) throw Error("Character not found");
 
-    this.players.set(socketId, payload);
+    const newCharacter = {
+      ...character,
+      ...payload,
+    };
+
+    this.players.set(socketId, newCharacter);
   }
 
   get() {
