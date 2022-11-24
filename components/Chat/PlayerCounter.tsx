@@ -7,7 +7,7 @@ const PlayerCounter = () => {
   const { room } = useGame();
   const { setModal } = useModal();
 
-  return (
+  return room ? (
     <div
       className="flex flex-row items-center drop-shadow-lg"
       onClick={() => setModal(EModals.PLAYER_LIST)}
@@ -15,6 +15,8 @@ const PlayerCounter = () => {
       <Icon icon="bxs:user" className="w-8 h-8" />
       <span>{Object.keys(room!.players).length || 0}</span>
     </div>
+  ) : (
+    <></>
   );
 };
 
