@@ -10,10 +10,10 @@ export const DmView = () => {
       </div>
       <textarea
         name="notes"
-        id=""
         cols={30}
         rows={10}
-        className="resize-none bg-transparent border border-primary-500"
+        placeholder="Notes"
+        className="resize-none bg-transparent border border-primary-500 placeholder:text-primary-500 p-2 rounded-xl"
       ></textarea>
     </div>
   );
