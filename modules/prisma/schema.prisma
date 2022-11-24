@@ -24,7 +24,7 @@ model Character {
   race            String
   userId           String
   name             String
-  picture        String
+  picture        String @default("https://firebasestorage.googleapis.com/v0/b/nat20-69420.appspot.com/o/default.jpg?alt=media&token=a25dadd8-99c2-4d36-84f3-c42cead6e6dc")
   classArmor       Int
   hitPoints        Int
   initiative       Int
