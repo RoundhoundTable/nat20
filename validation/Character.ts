@@ -4,7 +4,7 @@ export const createCharacterSchema = z.object({
   name: z.string().min(1),
   race: z.string().min(1),
   class: z.string().min(1),
-  picture: z.string().min(1),
+  picture: z.string().min(1).optional(),
   level: z.string().min(1),
   initiative: z.string().min(1),
   proficiencyBonus: z.string().min(1),
