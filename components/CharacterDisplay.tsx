@@ -3,8 +3,7 @@ import { FunctionComponent } from "react";
 import { CharacterStat } from "./CharacterStat";
 import CAIcon from "../assets/images/CAIcon.svg";
 import { HealthBar } from "./HealthBar";
-import { SavingThrow } from "./SavingThrow";
-import { Purse } from "./Purse";
+import { useSocket } from "../hooks/useSocket";
 
 interface ICharacterDisplayData {
   picture: string;
@@ -25,6 +24,7 @@ interface ICharacterDisplayData {
 export const CharacterDisplay: FunctionComponent<ICharacterDisplayData> = (
   props
 ) => {
+  const { socket } = useSocket();
   return (
     <div className="grid items-center justify-center w-full p-2 bg-black/20 mb-8">
       <div className="w-fit flex flex-col md:flex-row gap-2 md:gap-5 justify-center items-center">
@@ -75,10 +75,9 @@ export const CharacterDisplay: FunctionComponent<ICharacterDisplayData> = (
             </div>
           </div>
         </div>
-        <div className="flex flex-row md:flex-col gap-5">
-          <SavingThrow throws={props.savingThrows} />
-          <Purse gold={25} silver={15} bronze={5} />
-        </div>
+        {/*<div className="flex flex-row md:flex-col gap-5">
+          <SavingThrow throws={props.savingThrows} id={socket?.id as string} />
+  </div>*/}
       </div>
     </div>
   );
