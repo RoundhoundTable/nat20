@@ -1,26 +1,31 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button,
+input[type='number'] {
+-webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+*::-webkit-scrollbar {
+    width:7px;
+    height: 7px;
   }
-  body {
-    color: white;
-    background: black;
-  }
+
+*::-webkit-scrollbar-track {
+    background: #25262F;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #F6E3B9;
+    border-radius: 100vh;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
 }
