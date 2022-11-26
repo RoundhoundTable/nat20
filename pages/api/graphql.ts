@@ -16,5 +16,6 @@ export default cors(async function handler(req, res) {
 export const config = {
   api: {
     bodyParser: false,
+    responseLimit: "64mb",
   },
 };
