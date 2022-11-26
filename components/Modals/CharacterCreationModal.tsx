@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { createCharacterSchema } from "../../validation/Character";
 import { blobToDataUrl } from "../../utils/blobToData";
+import useLoading from "../../hooks/useLoading";
 
 interface IStats {
   STR: string | number;
@@ -34,6 +35,7 @@ export interface ICharacterForm {
 }
 
 const CharacterCreationModal: NextComponentType = () => {
+  const { loading } = useLoading();
   const { form, onChange, submit, updateForm, errors } =
     useForm<ICharacterForm>({
       schema: createCharacterSchema,
@@ -100,7 +102,9 @@ const CharacterCreationModal: NextComponentType = () => {
 
   return (
     <form
-      className="flex flex-col items-center gap-10"
+      className={`flex flex-col items-center gap-10 ${
+        loading ? "blur-md" : "blur-none"
+      }`}
       onSubmit={(ev: any) => submit({ ev, func: submitWrapper })}
     >
       <div className="border-b-2 w-60 lg:w-3/4 text-center border-b-primary-500 pb-2">
