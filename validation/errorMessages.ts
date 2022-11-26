@@ -5,6 +5,22 @@ export const firebaseErrors: Record<string, any> = {
       message: `Email not registered.`,
     },
   ],
+  "auth/too-many-requests": [
+    {
+      field: `email`,
+      message: `There are too many request right now, try later.`,
+    },
+    {
+      field: `password`,
+      message: `There are too many request right now, try later.`,
+    },
+  ],
+  "auth/email-already-in-use": [
+    {
+      field: `email`,
+      message: `The email is already in use.`,
+    },
+  ],
   "auth/wrong-password": [
     {
       field: `email`,
