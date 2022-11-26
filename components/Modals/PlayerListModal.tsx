@@ -18,6 +18,7 @@ const PlayerListModal = () => {
           const player = room?.players[id];
           return (
             <PlayerDisplay
+              id={id}
               picture={player.picture}
               hitPoints={player.hitPoints}
               name={player.name}
