@@ -1,4 +1,6 @@
+import { GraphQLError } from "graphql";
 import { ApolloContext } from "../../../../interfaces/apollo";
+import { formatServerError } from "../../../../utils/formatServerError";
 
 const DeleteCharacterHandler = async (
   _parent: unknown,
@@ -25,7 +27,7 @@ const DeleteCharacterHandler = async (
 
     return Boolean(deleted);
   } catch (err) {
-    console.error(err);
+    throw new GraphQLError(JSON.stringify(formatServerError(err as Error)));
   }
 };
 
