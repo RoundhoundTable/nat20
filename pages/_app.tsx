@@ -14,6 +14,7 @@ import SocketProvider from "../context/SocketProvider";
 import Head from "next/head";
 import ModalProvider from "../context/ModalProvider";
 import GameProvider from "../context/GameProvider";
+import LoadingProvider from "../context/LoadingProvider";
 
 const httpLink = new HttpLink({
   uri: "/api/graphql",
@@ -55,15 +56,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ApolloProvider client={client}>
         <AuthProvider>
-          <GameProvider>
-            <SocketProvider>
-              <ModalProvider>
-                <div className="font-poppins">
-                  <Component {...pageProps} />
-                </div>
-              </ModalProvider>
-            </SocketProvider>
-          </GameProvider>
+          <LoadingProvider>
+            <GameProvider>
+              <SocketProvider>
+                <ModalProvider>
+                  <div className="font-poppins">
+                    <Component {...pageProps} />
+                  </div>
+                </ModalProvider>
+              </SocketProvider>
+            </GameProvider>
+          </LoadingProvider>
         </AuthProvider>
       </ApolloProvider>
     </>
