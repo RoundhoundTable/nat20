@@ -34,3 +34,8 @@ export interface IModalContext {
   unsetModal: () => void;
   setModal: (modal: EModals, props?: any) => void;
 }
+
+export interface ILoadingContext {
+  toggleLoading: () => void;
+  loading: boolean;
+}
