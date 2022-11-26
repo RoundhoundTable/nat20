@@ -18,7 +18,7 @@ export const useForm = <T>({
     setErrors({
       ...errors,
       ...formatError(error),
-    } as T);
+    } as unknown as T);
   };
 
   const onChange = (ev: any) => {
@@ -81,11 +81,11 @@ export const useForm = <T>({
               (state) =>
                 ({
                   ...state,
-                  [parent]: {
+                  [parent as keyof T]: {
                     ...state![parent as keyof T],
                     [child]: natError.message,
                   },
-                } as T)
+                } as unknown as T)
             );
 
             return;
@@ -98,7 +98,7 @@ export const useForm = <T>({
                   ...state,
                   [field]: natError.message,
                   [sibling]: natError.message,
-                } as T)
+                } as unknown as T)
             );
 
             return;
