@@ -3,9 +3,11 @@ import { gql } from "apollo-server-core";
 import Router from "next/router";
 import { useEffect } from "react";
 import { ICharacterForm } from "../components/Modals/CharacterCreationModal";
+import useLoading from "./useLoading";
 
 export const useCreateCharacter = (payload: ICharacterForm) => {
-  const [CreateCharacter, { data }] = useMutation(
+  const { toggleLoading } = useLoading();
+  const [CreateCharacter, { data, loading }] = useMutation(
     gql`
       mutation CreateCharacter($payload: CharacterCreateInput!) {
         createCharacter(payload: $payload)
@@ -14,8 +16,15 @@ export const useCreateCharacter = (payload: ICharacterForm) => {
   );
 
   useEffect(() => {
-    if (data?.createCharacter) Router.reload();
+    if (data?.createCharacter) {
+      Router.reload();
+      toggleLoading();
+    }
   }, [data]);
+
+  useEffect(() => {
+    if (loading) toggleLoading();
+  }, [loading]);
 
   return {
     createCharacter: () =>

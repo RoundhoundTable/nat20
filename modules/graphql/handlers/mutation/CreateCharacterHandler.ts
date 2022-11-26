@@ -2,6 +2,8 @@ import { Character, Prisma } from "@prisma/client";
 import { ApolloContext } from "../../../../interfaces/apollo";
 import uploadImage from "../../../firebase/uploadImage";
 import { uuidv4 } from "@firebase/util";
+import { GraphQLError } from "graphql";
+import { formatServerError } from "../../../../utils/formatServerError";
 
 const CreateCharacterHandler = async (
   _parent: unknown,
@@ -29,7 +31,7 @@ const CreateCharacterHandler = async (
 
     return Boolean(character);
   } catch (err) {
-    console.error(err);
+    throw new GraphQLError(JSON.stringify(formatServerError(err as Error)));
   }
 };
 

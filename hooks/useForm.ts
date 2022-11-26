@@ -2,6 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { Nat20Error } from "../utils/Nat20Error";
 import { formatError } from "../utils/formatError";
+import { ApolloError } from "@apollo/client";
 
 export const useForm = <T>({
   initialValue,
@@ -12,6 +13,13 @@ export const useForm = <T>({
 }) => {
   const [form, setForm] = useState<T>((initialValue ?? {}) as T);
   const [errors, setErrors] = useState<T>();
+
+  const onError = (error: ApolloError) => {
+    setErrors({
+      ...errors,
+      ...formatError(error),
+    } as unknown as T);
+  };
 
   const onChange = (ev: any) => {
     if (ev.target.type === "number" && !/^-?\d+$/.test(ev.target.value)) return;
@@ -59,7 +67,7 @@ export const useForm = <T>({
         });
 
         resetErrors();
-        if (!result.success) throw formatError<T>(result.error);
+        if (!result.success) throw formatError(result.error);
       }
 
       func();
@@ -73,11 +81,11 @@ export const useForm = <T>({
               (state) =>
                 ({
                   ...state,
-                  [parent]: {
+                  [parent as keyof T]: {
                     ...state![parent as keyof T],
                     [child]: natError.message,
                   },
-                } as T)
+                } as unknown as T)
             );
 
             return;
@@ -90,7 +98,7 @@ export const useForm = <T>({
                   ...state,
                   [field]: natError.message,
                   [sibling]: natError.message,
-                } as T)
+                } as unknown as T)
             );
 
             return;
@@ -112,5 +120,6 @@ export const useForm = <T>({
     errors,
     resetErrors,
     submit,
+    onError,
   };
 };

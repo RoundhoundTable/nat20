@@ -3,11 +3,21 @@ import { ZodError, ZodIssue } from "zod";
 import { Nat20Error } from "../utils/Nat20Error";
 import { firebaseErrors } from "../validation/errorMessages";
 
-export const formatError = <T>(error: Error): Nat20Error[] => {
+export const formatError = (_error: Error): Nat20Error[] => {
   let formattedError: Nat20Error[] = [];
 
-  if (error instanceof FirebaseError) {
-    formattedError = firebaseErrors[error.code];
+  let error: Error | Nat20Error[] = _error;
+
+  if (!(error instanceof ZodError))
+    error = JSON.parse(error.message) as Nat20Error[];
+
+  if (Array.isArray(error) && error instanceof Array<Nat20Error>) {
+    error.forEach((err) => {
+      formattedError = {
+        ...formattedError,
+        [err.field]: err.message,
+      };
+    });
   }
   if (error instanceof ZodError) {
     error.errors.forEach((err: ZodIssue) => {

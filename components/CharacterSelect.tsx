@@ -79,6 +79,7 @@ const CharacterSelect: React.ForwardRefRenderFunction<
               return (
                 <Character
                   {...props}
+                  key={key}
                   wrapperClassname={className}
                   onClick={() => {
                     setSelected(character);

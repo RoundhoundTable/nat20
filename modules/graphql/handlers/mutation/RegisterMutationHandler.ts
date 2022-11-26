@@ -1,8 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { GraphQLError } from "graphql";
 import { ApolloContext } from "../../../../interfaces/apollo";
 import { IRegisterMutationInput } from "../../../../interfaces/graphql";
 import { auth } from "../../../../libs/firebaseAdmin";
 import app from "../../../../libs/firebaseApp";
+import { formatServerError } from "../../../../utils/formatServerError";
 
 const RegisterMutationHandler = async (
   _parent: unknown,
@@ -27,7 +29,7 @@ const RegisterMutationHandler = async (
 
     return token;
   } catch (err) {
-    console.error(err);
+    throw new GraphQLError(JSON.stringify(formatServerError(err as Error)));
   }
 };
 
