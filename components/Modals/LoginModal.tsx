@@ -15,7 +15,7 @@ interface LoginForm {
 
 const LoginModal: NextComponentType = () => {
   const { signIn } = useAuth();
-  const { form, onChange, submit, errors } = useForm<LoginForm>({
+  const { form, onChange, submit, errors, onError } = useForm<LoginForm>({
     schema: loginSchema,
   });
   const [Login, { data }] = useMutation(
@@ -23,7 +23,10 @@ const LoginModal: NextComponentType = () => {
       mutation Mutation($credentials: LoginMutationInput!) {
         login(credentials: $credentials)
       }
-    `
+    `,
+    {
+      onError,
+    }
   );
 
   const loginWrapper = async () => {
@@ -49,6 +52,7 @@ const LoginModal: NextComponentType = () => {
     <div className="flex flex-col items-center gap-5 text-white">
       <p className="text-2xl font-bold uppercase text-primary-500">Login</p>
       <form
+        className="flex flex-col gap-5"
         method="POST"
         onSubmit={(ev: any) => submit({ ev, func: loginWrapper })}
       >

@@ -18,7 +18,7 @@ interface RegisterForm {
 
 const RegisterModal: NextComponentType = () => {
   const { signUp } = useAuth();
-  const { form, onChange, submit, errors } = useForm<RegisterForm>({
+  const { form, onChange, submit, errors, onError } = useForm<RegisterForm>({
     schema: registerSchema,
   });
   const [Register, { data }] = useMutation(
@@ -26,7 +26,10 @@ const RegisterModal: NextComponentType = () => {
       mutation Mutation($credentials: RegisterMutationInput!) {
         register(credentials: $credentials)
       }
-    `
+    `,
+    {
+      onError,
+    }
   );
 
   const registerWrapper = async () => {
@@ -52,6 +55,7 @@ const RegisterModal: NextComponentType = () => {
     <div className="flex flex-col items-center gap-5 text-white">
       <p className="text-2xl font-bold uppercase text-primary-500">Register</p>
       <form
+        className="flex flex-col gap-5"
         method="POST"
         onSubmit={(ev: any) => submit({ ev, func: registerWrapper })}
       >
